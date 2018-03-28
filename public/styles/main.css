@@ -1,0 +1,56 @@
+html{
+    background-color: antiquewhite;
+}
+body{
+    background-color: antiquewhite;
+}
+#gamelist{
+    background-color: bisque;
+    height:500px;
+    width:100%;
+    margin:0%;
+    padding: 0%;
+    overflow:auto;
+}
+#gamelist li{
+    list-style-type: none;
+    vertical-align: middle;
+    height:70px;
+    line-height: 70px;
+    font-size:20px;
+    /*text-align: center; */ 
+}
+#gamelist li:hover{
+    background-color: rgb(255, 202, 132);
+}
+#gamelist li button{
+    float:right;
+    background-color:lightcoral;
+    
+
+    border-radius: 40%;
+    margin:0 auto;
+    display: block;
+} 
+#gamelist li button:hover{
+    background-color: rgb(255, 78, 14);
+}
+#chat{
+    position: fixed;
+    bottom:0px;
+    left:0px;
+    width:100%;
+}
+#chat input{
+    margin:50px;
+}
+.dice{
+    width:50px;
+    height:50px;
+    display:inline-block;
+    background-color: white;
+    margin: 2%;
+    border-radius: 10px;
+    font-size: 40px;
+    text-align: center;
+}
