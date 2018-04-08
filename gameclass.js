@@ -1,5 +1,4 @@
-function game(Name,nsp){
-    
+function game(Name){
     this.Name=Name
     this.players=[]
     this.messages=[]
@@ -9,11 +8,7 @@ function game(Name,nsp){
         this.players.push(Player)
         console.log(this)
     }
-    this.newconnection=function(socket){
-        if(this.started){
-            
-        }
-    }
+
    
     //nsp.on('connection',this.addplayer(socket))
 }

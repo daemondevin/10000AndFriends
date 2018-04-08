@@ -2,10 +2,14 @@
 
 
 function getrooms(){
+    //get list of avalible rooms from server api
     fetch('/api/getrooms')
     .then((resp) => resp.json())
+    //write a ul of avalible rooms
     .then(function(data){console.log(this,data)
         var gamelist = document.getElementById('gamelist')
+        //remover all li from game list
+        gamelist.innerHTML=""
         for(i=0; i<data.rooms.length;i++){
             let li = document.createElement("li");
             let joinbtn =document.createElement("button")
@@ -15,13 +19,13 @@ function getrooms(){
             li.appendChild(joinbtn)
             gamelist.appendChild(li)
             console.log(data.rooms[i])
-    //document.getElementById('gamelist').appendChild('<li>game!</li>')
+    
 }})}
 
 function createnewgame(){
     console.log(document.getElementById('NewGameName').value)
     fetch('/api/newgame/'+document.getElementById('NewGameName').value)
-    //.then(() => getrooms())
+    .then(() => getrooms())
     //.then((data) => {console.log('wow')})
 }
 

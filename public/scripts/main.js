@@ -1,5 +1,5 @@
 var socket = io(window.location.pathname);
-console.log(window.location.pathname)
+console.log(window.location.pathname,socket)
 function rand(){return Math.floor(Math.random()*6+1)}
 
 function roll(){
@@ -16,7 +16,13 @@ function roll(){
 }
 
 function sendmsg(){
-    console.log(document.getElementById('chatmessage').value)
+    socket.emit('msg',document.getElementById('chatmessage').value)
+    document.getElementById('chatmessage').value=""
 }
-
+socket.on('msg',function(msg){console.log(msg)
+    var chatlog=document.getElementById('chatlog');
+    //to do: rewrite this so on a new message coming in we make a new <li>
+    chatlog.appendChild(document.createElement('li').appendChild(document.createTextNode(msg+"\n")))
+})
+socket.on('connection',console.log('Newconnections'))
 var dice =[rand(),rand(),rand(),rand(),rand(),rand()]
