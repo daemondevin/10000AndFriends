@@ -20,9 +20,11 @@ function sendmsg(){
     document.getElementById('chatmessage').value=""
 }
 socket.on('msg',function(msg){console.log(msg)
-    var chatlog=document.getElementById('chatlog');
+    let chatlog=document.getElementById('chatlog');
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode(msg))
     //to do: rewrite this so on a new message coming in we make a new <li>
-    chatlog.appendChild(document.createElement('li').appendChild(document.createTextNode(msg+"\n")))
+    chatlog.appendChild(li)
 })
 socket.on('connection',console.log('Newconnections'))
 var dice =[rand(),rand(),rand(),rand(),rand(),rand()]

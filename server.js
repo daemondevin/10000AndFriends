@@ -19,7 +19,8 @@ app.get('/api/newgame/:gamename',(req,res)=>{
             nsp.emit('msg',socket.id+" joined")
             socket.on('msg',(msg)=>{console.log(socket.id+' sent: '+msg)
                 //to do: as it stands this emits to many messages. 
-                socket.broadcast.emit('msg',msg)})
+                //socket.broadcast.emit('msg',msg)
+                nsp.emit('msg', msg)})
     })    
         res.sendFile(__dirname+'/public/game.html')
     });
