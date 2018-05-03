@@ -3,9 +3,7 @@ html{
     --secondary-color:rgb(86, 59, 97);
     --button-color:rgb(25, 145, 214);
     background-color: rgb(148, 116, 161);
-
-    
-
+    font-family: 'Anton', sans-serif;
 }
 
 body{
@@ -55,7 +53,7 @@ body{
 }
 #chatlog{
     background-color:var(--secondary-color);
-    height:50px;
+    height:100px;
     width:80%;
     margin:0%;
     padding: 0%;
@@ -75,6 +73,6 @@ body{
     background-color: white;
     margin: 2%;
     border-radius: 10px;
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
 }
