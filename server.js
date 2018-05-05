@@ -15,9 +15,12 @@ app.get('/api/newgame/:gamename', (req, res) => {
     rooms.push(NewGame);
     
     app.get('/' + NewGame.Name, (req, res) => {
-        console.log(NewGame.Name + 'someone came!');
-        //var nsp = io.of('/' + NewGame.Name)
+        
         var nsp = io.of('/' + NewGame.Name)
+            
+        
+        //var nsp = io.of('/' + NewGame.Name)
+        //var nsp = io.of('/' + NewGame.Name)
         nsp.on('connection', (socket) => {
             console.log(socket.id);
             socket.on('playerjoin', (playername)=>{
