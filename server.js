@@ -18,7 +18,7 @@ app.get('/api/newgame/:gamename', (req, res) => {
         
         var nsp = io.of('/' + NewGame.Name)
             
-        
+        console.log("OW!")
         //var nsp = io.of('/' + NewGame.Name)
         //var nsp = io.of('/' + NewGame.Name)
         nsp.on('connection', (socket) => {
