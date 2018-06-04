@@ -1,16 +1,60 @@
 html{
-    --background-main:rgb(74, 62, 82);
-    --secondary-color:rgb(86, 59, 97);
-    --button-color:rgb(25, 145, 214);
-    background-color: rgb(148, 116, 161);
+    --background-main:linear-gradient(#5c5c5c,rgb(44, 44, 44));
+    --secondary-color:rgb(59, 85, 22,0);
+    --button-color:rgb(135, 194, 50);
+    --maincolor:rgb(135, 194, 50);
+    background: rgb(44, 44, 44);
     font-family: 'Anton', sans-serif;
+    color:var(--maincolor);
+    min-height:100%;
+    margin:0%;
+
 }
 
 body{
-    background-color:var(background-main);
+    background:var(--background-main);
+    min-height: 100%;
+    margin:0%;
+
+}
+li{
+    list-style-type: none;
+    vertical-align: middle;
+}
+button{
+    background: var(--button-color);
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+h5{
+    margin:0px;
+    margin-left:5%;
+    margin-top:5px;
+    font-weight: normal;
+    font-size: 60px;
+    border-width: 2px;
+    border-style:solid;
+    /*border-color:rgb(130,101,167);*/
+    padding:1%;
+    padding-right: 4%;
+    display: inline-block;
+    
+}
+#TopCont{
+    display: flex;
+    flex-wrap: wrap;
+}
+#TopContLeft{
+    width:500px;
+}
+.GameBtn{
+    height: 50px;
+    width:50px;
+    border-radius: 20%;
 }
 #gamelist{
-    background-color: var(--background-main);
+    background: rgba(255, 255, 255);
     height:500px;
     width:100%;
     margin:0%;
@@ -26,11 +70,11 @@ body{
     /*text-align: center; */ 
 }
 #gamelist li:hover{
-    background-color: var(--secondary-color);
+    background: var(--secondary-color);
 }
 #gamelist li button{
     float:right;
-    background-color:var(--button-color);
+    background:var(--button-color);
     border: 0px;
     height: 100%;
     width:10%;
@@ -39,22 +83,71 @@ body{
     display: block;
 } 
 #gamelist li button:hover{
-    background-color: rgb(0, 255, 255);
+    background: rgb(0, 0, 0);
+}
+#PlayerListCont{
+    background:var(--secondary-color);
+    height:200px;
+    width:500px;
+    margin:0%;
+    padding: 0%;
+    overflow:auto;
+    position: relative;
+}
+#PlayerListCont input{
+    position: absolute;
+    width:90%;
+    bottom: 0px;
+    margin:0px auto;
+    padding: 0px;
+    border:0px;
+    height:10%;
+}
+#PlayerListCont button{
+    position: absolute; 
+    width:10%;
+    bottom: 0px;
+    right:0px;
+    margin:0 auto;
+    display: block;
+    background:var(--button-color);
 }
 #chat{
-    position: fixed;
+    background:var(--secondary-color);
+    /*position: absolute;*/
     bottom:0px;
     left:0px;
-    width:100%;
-    
+    width:92%;
+    height:220px;
+    margin:2%;
+    border-color: var(--maincolor);
+    border-width:30%;
+    padding:2%;
+    border-style: solid;
 }
 #chat input{
-    margin:50px;
+    /*position: absolute;*/
+    width:83%;
+    /*bottom: 0px;*/
+    float: left;
+    margin:0px auto;
+    padding: 0px;
+    border:0px;
+    display:block;
+    height:10%;
+    margin-bottom: 5%;
+}
+#chat button{
+    width:10%;
+    margin:0%;
+    height:10%;
+    float:right;
 }
 #chatlog{
-    background-color:var(--secondary-color);
-    height:100px;
-    width:80%;
+    background:var(--secondary-color);
+    height:200px;
+    display: block;
+    width:100%;
     margin:0%;
     padding: 0%;
     overflow:auto;
@@ -62,17 +155,68 @@ body{
 #chatlog li{
     list-style-type: none;
     vertical-align: middle;
-    /*height:70px;*/
-    /*line-height: 70px;*/
     font-size:12px;
 }
+#dicecont :last-child{
+    margin-right: 2%;
+}
 .dice{
+    color:black;
     width:50px;
     height:50px;
+    line-height: 50px;
     display:inline-block;
-    background-color: white;
-    margin: 2%;
+    background: white;
+    margin: 1%;
+    margin-top:1%;
     border-radius: 10px;
     font-size: 30px;
     text-align: center;
 }
+
+/*Modal*/
+.modalBG{
+     display:none; 
+    /*filter:blur(5px);*/
+    position: fixed;
+    z-index:1;
+    left: 0;
+    top:0;
+    height: 100%;
+    width:100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,.2);
+    animation-name:modalopen;
+    animation-duration:1s;
+
+}
+.modalBox{
+    z-index: 2;
+    background-color:rgb(44, 44, 44);
+    width:70%;
+    height:50px;
+    filter:none;
+    vertical-align: middle;
+    animation-name:modalopen;
+    animation-duration:2s;
+    margin:15%;
+    border-top: 10px solid;
+}
+.modalBox input{
+    background-color: whitesmoke;
+    font-size: 20px;
+    border: 0px;
+}
+#Master{
+    filter:none;
+    animation-name: ModalToggle;
+    animation-duration: 2s;
+}
+ /*@keyframes ModalToggle{
+    from{filter:none}
+    to{filter:blur(5px)}
+} */
+@keyframes modalopen{
+    from{ opacity: 0}
+    to {opacity: 1}
+  }

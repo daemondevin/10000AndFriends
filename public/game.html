@@ -8,10 +8,19 @@
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/styles/main.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>
-    <script src='/scripts/main.js'></script>
+    
 </head>
+
 <body>
-    <div class='dicecont'>
+        <div id="joinModal" class="modalBG">
+                <div class="modalBox">
+                    Name:<input id='playername'><button onclick="join(document.getElementById('playername').value)">Join</button>
+                </div>
+        </div>
+    <div id="Master">
+    <div id='TopCont'><div id='TopContLeft'>
+    <h5>Farkle.</h5>
+    <div id='dicecont'>
         <div id='d1' class='dice'>1</div>
         <div id='d2'class='dice'>2</div>
         <div id='d3'class='dice'>3</div>
@@ -19,19 +28,23 @@
         <div id='d5'class='dice'>5</div>
         <div id='d6'class='dice'>6</div>
     </div>
-        <button id='RollBtn' onclick="roll()">Roll</button>
+        <button id='RollBtn' class='GameBtn' onclick="roll()">Roll</button>
+        <button id='GameStart' class='GameBtn' onclick="gamestart()">Start</button>
+    </div>
     <div id='PlayerListCont'>
         <ul id='PlayerList'>
           
         </ul>
-        <input id='playername'><button onclick="join(document.getElementById('playername').value)">Join</button>
+        
     </div>
-
+    </div>
 <div id='chat'>
     <ul id='chatlog'>
 
     </ul>
-    <input id='chatmessage'><button onclick="sendmsg()">Send Message</button>
+    <input id='chatmessage'><button onclick="sendmsg()">Send</button>
 </div>
+</div>
+<script src='/scripts/main.js'></script>
 </body>
 </html>
