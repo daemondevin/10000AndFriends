@@ -1,16 +1,17 @@
 const winscore=100
 
-const isHost = function isHost(socket,game){
-    for (i=0;i<game.players.length;i++){
-        if(socket.id==game.players[i].id){
-            console.log(socket.id==game.players[i].id)
+const isHost = function isHost(socket){
+    for (i=0;i<this.players.length;i++){
+        if(socket.id==this.players[i].id){
+            console.log(socket.id==this.players[i].id)
             return true
         }
         return false
     }
 }
-const iswon = function iswon(game){
-    return Newgame.players.map(player => player.score).find((score)=>score>winscore)
+const isWon = function isWon(game){
+    return game.players.map(player => player.score).findIndex((score)=>score>winscore)
 }
 
 module.exports.isHost=isHost;
+module.exports.isWon=isWon;

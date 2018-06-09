@@ -21,15 +21,18 @@
     <div id='TopCont'><div id='TopContLeft'>
     <h5>Farkle.</h5>
     <div id='dicecont'>
-        <div id='d1' class='dice'>1</div>
-        <div id='d2'class='dice'>2</div>
-        <div id='d3'class='dice'>3</div>
-        <div id='d4'class='dice'>4</div>
-        <div id='d5'class='dice'>5</div>
-        <div id='d6'class='dice'>6</div>
+        <div id='d0'class='dice'>1</div>
+        <div id='d1'class='dice'>2</div>
+        <div id='d2'class='dice'>3</div>
+        <div id='d3'class='dice'>4</div>
+        <div id='d4'class='dice'>5</div>
+        <div id='d5'class='dice'>6</div>
     </div>
-        <button id='RollBtn' class='GameBtn' onclick="roll()">Roll</button>
+        <button id='RollBtn' class='GameBtn' onclick="socket.emit('roll', diceindex)">Roll</button>
         <button id='GameStart' class='GameBtn' onclick="gamestart()">Start</button>
+        <button id='Bank' class='GameBtn' onclick="Bank()">Bank</button>        
+        
+
     </div>
     <div id='PlayerListCont'>
         <ul id='PlayerList'>

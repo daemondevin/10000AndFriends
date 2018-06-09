@@ -3,21 +3,17 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const gameclass = require('./gameclass');
-const gamelogic = require('./gamelogic');
-var rooms = []
 
-console.log(gamelogic.isHost)
+var rooms = []
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/lobby.html')
 })
-
 app.get('/api/newgame/:gamename', (req, res) => {
     res.send(req.params.gamename)
     var NewGame = new gameclass(req.params.gamename)
     var nsp = io.of('/' + NewGame.Name)
     rooms.push(NewGame);
-
     nsp.on('connection', (socket) => {
         console.log(socket.id);
         console.log(NewGame)
@@ -35,37 +31,55 @@ app.get('/api/newgame/:gamename', (req, res) => {
                     name: player.name,
                     id: socket.id,
                     host: false,
-                    score:0
+                    score: 0
                 })
             }
-            nsp.emit('playerupdate',NewGame.players)
+            nsp.emit('playerupdate', NewGame.players)
             console.log(NewGame.players)
         })
-        socket.on('GameStart',()=>{
-            console.log(socket.id,NewGame.players);
-            console.log(gamelogic.isHost(socket,NewGame))
-            if(gamelogic.isHost(socket,NewGame)){
-            NewGame.started=true;}
-            var turnindex =  Math.floor(Math.random() * NewGame.players.length)
-            while(NewGame.started){
-
-                if(Newgame.players.map(player => player.score).find((score)=>score>21)){
-                    console.log("game was won")}
+        socket.on('GameStart', () => {
+            console.log(socket.id, NewGame.players);
+            console.log(NewGame.isHost(socket))
+            if (NewGame.isHost(socket)) {
+                NewGame.started = true;
+            }
+            NewGame.turnindex = Math.floor(Math.random() * NewGame.players.length)
+            nsp.emit('newturn', NewGame.turnindex)
+            //todo: make this do something for the client other than log a message
+        })
+        socket.on('roll', (diceindex) => {
+            if (socket.id == NewGame.players[NewGame.turnindex].id && NewGame.started == true) {
+                console.log('diceroll');
+                NewGame.roll(diceindex)
+                console.log(NewGame.dice)
+                //nsp.emit('roll_Return',{values:NewGame.dice,index:NewGame.diceindex})
+                //NewGame.players[NewGame.turnindex].score++;
+                //NewGame.nextturn();
+                //nsp.emit('newturn', NewGame.turnindex)
+            } else {
+                console.log(socket.id + ' tried to roll but it is ' + NewGame.players[NewGame.turnindex].id + ' turn')
             }
         })
-
-        nsp.emit('msg', {msg:socket.id + " joined",sender:""})
+        socket.on('bank',()=>{
+            NewGame.Bank(socket)
+        });
+        nsp.emit('msg', {
+            msg: socket.id + " joined",
+            sender: ""
+        })
         socket.on('msg', (msg) => {
             console.log(socket.id + ' sent: ' + msg)
-            //to do: as it stands this emits to many messages. 
-            nsp.emit('msg', {msg:msg,sender:socket.id})
+            
+            nsp.emit('msg', {
+                msg: msg,
+                sender: socket.id
+            })
         })
 
     })
-
     app.get('/' + NewGame.Name, (req, res) => {
-        
-         res.sendFile(__dirname + '/public/game.html')
+
+        res.sendFile(__dirname + '/public/game.html')
     });
 })
 app.get('/api/getrooms', (req, res) => {
@@ -76,10 +90,7 @@ app.get('/api/getrooms', (req, res) => {
 
 app.use(express.static(__dirname + '/public'))
 
-//io.on('connection', function(socket){
-//console.log(socket);
-//  });
 
-http.listen(3001, function () {
-    console.log('listening on *:3001');
+http.listen(3000, function () {
+    console.log('listening on *:3000');
 });

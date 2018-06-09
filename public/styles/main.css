@@ -3,6 +3,7 @@ html{
     --secondary-color:rgb(59, 85, 22,0);
     --button-color:rgb(135, 194, 50);
     --maincolor:rgb(135, 194, 50);
+    --dice-de-select-color:rgb(150, 150, 150);
     background: rgb(44, 44, 44);
     font-family: 'Anton', sans-serif;
     color:var(--maincolor);
