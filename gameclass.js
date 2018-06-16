@@ -43,7 +43,7 @@ function Score(dice, score) {
     }
     return score
 }
-console.log(Score([1,1,1,5,5,3], 0))
+//console.log(Score([1,1,1,5,5,3], 0))
 
 const winscore = 100
 
@@ -75,7 +75,7 @@ function game(Name) {
     }
 
     this.roll = function (index) {
-
+        
         console.log(this.dice)
         if (!index.some(x => {
                 this.dice[x].avalible == false
