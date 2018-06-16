@@ -18,7 +18,7 @@ app.get('/api/newgame/:gamename', (req, res) => {
         console.log(socket.id);
         console.log(NewGame)
         socket.on('playerjoin', (player) => {
-            console.log(NewGame.players.length)
+            if (!NewGame.started){
             if (NewGame.players.length == 0) {
                 NewGame.players.push({
                     name: player.name,
@@ -36,7 +36,7 @@ app.get('/api/newgame/:gamename', (req, res) => {
             }
             nsp.emit('playerupdate', NewGame.players)
             console.log(NewGame.players)
-        })
+        }})
         socket.on('GameStart', () => {
             console.log(socket.id, NewGame.players);
             console.log(NewGame.isHost(socket))
@@ -52,7 +52,7 @@ app.get('/api/newgame/:gamename', (req, res) => {
                 console.log('diceroll');
                 NewGame.roll(diceindex)
                 console.log(NewGame.dice)
-                //nsp.emit('roll_Return',{values:NewGame.dice,index:NewGame.diceindex})
+                nsp.emit('roll_Return',NewGame.dice)
                 //NewGame.players[NewGame.turnindex].score++;
                 //NewGame.nextturn();
                 //nsp.emit('newturn', NewGame.turnindex)
