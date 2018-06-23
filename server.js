@@ -51,7 +51,7 @@ app.get('/api/newgame/:gamename', (req, res) => {
             if (socket.id == NewGame.players[NewGame.turnindex].id && NewGame.started == true) {
                 console.log('diceroll');
                 NewGame.roll(diceindex)
-                console.log(NewGame.dice)
+                
                 nsp.emit('roll_Return',NewGame.dice)
                 //NewGame.players[NewGame.turnindex].score++;
                 //NewGame.nextturn();

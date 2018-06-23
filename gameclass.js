@@ -1,18 +1,22 @@
+
+
 function ofakind(eval, dice) {
-    for (i = 1; i < 7; i++) {
+    debugger
+    for (let i = 1; i<7; i++) {
         if (dice.filter((n) => {
                 return n == i
             }).length == eval) {
             return [true, i]
-        } else return [false]
+        } 
     }
+    return [false]
 }
 /*the idea of this function is that we start checking the dice for the highest scoring roll conditions first, then we run re-run the 
 functions with the dice used in the first conditon filtered out till no more condtions are met and return the score.  Pretty proud of
 this idea, writing it down here so I remember what I was thinking.
 */
 function Score(dice, score) {
-    //debugger
+    debugger
     console.log('score:',dice, score)
     if (ofakind(6, dice)[0]) {
         score += 3000
@@ -45,6 +49,7 @@ function Score(dice, score) {
 }
 //console.log(Score([1,1,1,5,5,3], 0))
 
+
 const winscore = 100
 
 function game(Name) {
@@ -75,24 +80,50 @@ function game(Name) {
     }
 
     this.roll = function (index) {
-        
-        console.log(this.dice)
-        if (!index.some(x => {
-                this.dice[x].avalible == false
-            })) {
-            console.log('one of these dice should not be avalible')
-        }
+        debugger
+        console.log("Index: ",index)
         for (let i = 0; i < index.length; i++) {
+    
             //console.log(i,index[i],this.dice[index[i]].value,Math.floor(Math.random()*6+1))
             this.dice[index[i]] = {
                 value: Math.floor(Math.random() * 6 + 1),
-                avalible: true
+                avalible: this.dice[index[i]].avalible
             } //.value=Math.floor(Math.random()*6+1)
 
         }
+        //debugger
+        var scoreddice =[]
+        //set all the dice not in the index to unavalible
+        for (let i=0;i< 6;i++){
+            if (index.includes(i)==false){
+                console.log('I should be false for ',i)
+                if(this.dice[i].avalible==true){
+                    scoreddice.push(this.dice[i].value)
+                    this.dice[i].avalible=false;
+                }
+                
+            }
+        } 
+        //debugger
+        console.log(Score(scoreddice.map(y => y.value),0))
+        this.turn.score+=Score(scoreddice,0)
 
-
+        console.log(this.turn.score)
+        /*if (!index.some(x => {
+                this.dice[x].avalible == false
+            })) {
+            console.log('one of these dice should not be avalible')
+        }*/
+        console.log('112',this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0))
+        if(Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0)==0){
+            //farkle occured
+            console.log('farkle')
+            this.turn.score=0
+            this.nextturn()
+        }
+        console.log(this.dice)
         this.roll_count++
+        debugger
     }
 
     this.addplayer = function addplayer(Player) {
@@ -115,9 +146,27 @@ function game(Name) {
     this.Bank = function Bank(socket) {
         console.log(this)
         if (socket.id == this.players[this.turnindex].id && this.started == true) {
-            this.players[this.turnindex].score += Score(this.dice)
+            this.players[this.turnindex].score += this.turn.score
+            this.turn.score=0;
         }
 
     }
 }
 module.exports = game;
+
+
+//This is test code.
+example = new game('game')
+example.dice=[
+{value:3,avalible:true},
+{value:3,avalible:true},
+{value:3,avalible:true},
+{value:2,avalible:true},
+{value:1,avalible:true},
+{value:2,avalible:true}
+]
+example.roll([0,1,2,3,4,5])
+//console.log(example.turn)
+//console.log('153: ',example.dice)
+console.log(ofakind(3,[4,4,4]))
+//console.log(Score([2,3,4,4,4,5],0))
