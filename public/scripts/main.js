@@ -7,12 +7,18 @@ function nameModal(show) {
         document.getElementById("joinModal").style.display = "block";
         document.getElementById("Master").style.filter = "blur(5px)";
     } else {
-        console.log("hide")
         document.getElementById("joinModal").style.display = "none";
         document.getElementById("Master").style.filter = "none";
     }
 }
 
+function displayButton(id, show) {
+    if (show) {
+        document.getElementById(id).style.display = "inline-block";
+    } else {
+        document.getElementById(id).style.display = "none"
+    }
+}
 nameModal(true);
 
 function rand() {
@@ -25,8 +31,6 @@ function rollanim(dice) {
         changes++
 
         for (i = 0; i <= 5; i++) {
-            //dice[i] = rand()
-            //console.log('d'+(i+1),dice[i])
             document.getElementById('d' + (i)).innerHTML = rand()
         }
         if (changes > 300) {
@@ -51,7 +55,7 @@ function roll(dice) {
 }
 
 function Bank() {
-    socket.emit('Bank')
+    socket.emit('bank')
 }
 
 function sendmsg() {
@@ -75,18 +79,36 @@ function join(playername) {
     nameModal(false)
 }
 socket.on('playerupdate', (players) => {
+    //in production app we should NOT share socket ID's
     document.getElementById('PlayerList').innerHTML = "";
     console.log(players)
+    if (players.filter((player) => player.host)[0].id == socket.id) {
+        console.log('player is host!')
+        displayButton('GameStart',true)
+    }
     let playerlist = document.getElementById('PlayerList');
     for (let i = 0; i < players.length; i++) {
         console.log(players[i])
         let li = document.createElement('li');
-        li.appendChild(document.createTextNode(players[i].name + " " + players[i].score))
+        let name = document.createElement('div');
+        let score = document.createElement('div');
+        li.appendChild(name);
+        li.appendChild(score);
+        name.innerHTML = players[i].name
+        score.innerHTML = players[i].score
+        name.setAttribute('id', 'PlayerListName')
+        score.setAttribute('id', 'PlayerListScore')
+
         playerlist.appendChild(li)
     }
 })
-socket.on('newturn', (index) => {
-    console.log('it is the ' + index + 'players turn')
+socket.on('newturn', (player) => {
+    //console.log('it is the ' + index + ' players turn');
+    console.log(player.id,socket.id)
+    displayButton('RollBtn',player.id==socket.id)
+    displayButton('Bank',player.id==socket.id)
+    console.log(document.getElementById('PlayerList').children)
+    //document.getElementById('PlayerList').children[0].setAttribute('id', 'PlayerListTurn')
 })
 socket.on('roll_Return', function (dice) {
     console.log(dice);
@@ -105,7 +127,7 @@ var diceindex = [0, 1, 2, 3, 4, 5];
             if (diceindex.includes(i)) {
                 diceindex = diceindex.filter(j => j != i)
                 document.getElementById('d' + i).style.backgroundColor = 'grey'
-                //console.log(diceindex)
+                
             } else {
                 diceindex.push(i)
                 document.getElementById('d' + i).style.backgroundColor = 'white'

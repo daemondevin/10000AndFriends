@@ -1,10 +1,10 @@
 html{
-    --background-main:linear-gradient(#5c5c5c,rgb(44, 44, 44));
-    --secondary-color:rgb(59, 85, 22,0);
-    --button-color:rgb(135, 194, 50);
-    --maincolor:rgb(135, 194, 50);
+    --background-main:linear-gradient(rgb(255, 255, 255),rgb(180, 180, 180));
+    --secondary-color:rgb(255, 238, 0);
+    --button-color:rgb(235, 0, 34);
+    --maincolor:rgb(255, 0, 34);
     --dice-de-select-color:rgb(150, 150, 150);
-    background: rgb(44, 44, 44);
+    background: rgb(180, 180, 180);
     font-family: 'Anton', sans-serif;
     color:var(--maincolor);
     min-height:100%;
@@ -27,15 +27,22 @@ button{
     border: 0px;
     padding: 0px;
     margin: 0px;
+    font-family: 'Galada',cursive;
+    color:white;
+    height:10%;
+    width:10%;
 }
 h5{
+    font-family: 'Galada',cursive;
     margin:0px;
     margin-left:5%;
-    margin-top:5px;
+    margin-top:2.5%;
     font-weight: normal;
-    font-size: 60px;
+    font-size: 80px;
+    height:80px;
+    line-height: 60px;
     border-width: 2px;
-    border-style:solid;
+    /*border-style:solid;*/
     /*border-color:rgb(130,101,167);*/
     padding:1%;
     padding-right: 4%;
@@ -53,6 +60,9 @@ h5{
     height: 50px;
     width:50px;
     border-radius: 20%;
+    margin:2.5%;
+    box-shadow: 6px 6px 6px 3px rgba(161, 161, 161, 0.774);
+    display: none;
 }
 #gamelist{
     background: rgba(255, 255, 255);
@@ -82,39 +92,58 @@ h5{
     /*border-radius: 40%;*/
     margin:0 auto;
     display: block;
+    transition-duration: 1s;
 } 
 #gamelist li button:hover{
-    background: rgb(0, 0, 0);
+    background: var(--secondary-color);
 }
 #PlayerListCont{
-    background:var(--secondary-color);
+    
     height:200px;
     width:500px;
-    margin:0%;
+    margin:0% 0% 0% 2.5%;
     padding: 0%;
     overflow:auto;
     position: relative;
 }
-#PlayerListCont input{
-    position: absolute;
-    width:90%;
-    bottom: 0px;
-    margin:0px auto;
-    padding: 0px;
-    border:0px;
-    height:10%;
+#PlayerList{
+    background-color:rgb(255, 255, 255,.5);
+    padding:2.5%;
+    border-width: 3px;
+    border-radius: 10px;
+    border-style: solid;
+    box-shadow: 6px 6px 6px 3px rgba(161, 161, 161, 0.774)
 }
-#PlayerListCont button{
+#PlayerListCont li{
+    list-style-type: none;
+    vertical-align: middle;
+    height:30px;
+    line-height: 30px;
+    font-size:20px;
+}
+
+#PlayerListName{
+    float:left;
+    height:30px;
+    line-height: 30px;
+    font-size:20px;
+}
+#PlayerListScore{
+    float:right;
     position: absolute; 
-    width:10%;
-    bottom: 0px;
-    right:0px;
+    height:30px;
+    line-height:30px;
+    right:10px;
     margin:0 auto;
     display: block;
-    background:var(--button-color);
+}
+#PlayerListTurn{
+    border-bottom-color:var(--maincolor);
+    border-bottom-width:2px;
+    border-bottom-style: solid;
 }
 #chat{
-    background:var(--secondary-color);
+    background:rgba(255, 255, 255, 0.3);
     /*position: absolute;*/
     bottom:0px;
     left:0px;
@@ -145,7 +174,7 @@ h5{
     float:right;
 }
 #chatlog{
-    background:var(--secondary-color);
+    background:rgba(255, 255, 255, 0.3);
     height:200px;
     display: block;
     width:100%;
@@ -173,6 +202,10 @@ h5{
     border-radius: 10px;
     font-size: 30px;
     text-align: center;
+    border-width: 2px;
+    border-style: solid;
+    box-shadow: 2px 2px 2px 1px rgba(161, 161, 161, 0.774);
+
 }
 
 /*Modal*/

@@ -44,24 +44,29 @@ app.get('/api/newgame/:gamename', (req, res) => {
                 NewGame.started = true;
             }
             NewGame.turnindex = Math.floor(Math.random() * NewGame.players.length)
-            nsp.emit('newturn', NewGame.turnindex)
-            //todo: make this do something for the client other than log a message
+            nsp.emit('newturn', NewGame.players[NewGame.turnindex])
+            
         })
         socket.on('roll', (diceindex) => {
             if (socket.id == NewGame.players[NewGame.turnindex].id && NewGame.started == true) {
                 console.log('diceroll');
-                NewGame.roll(diceindex)
+                if(!NewGame.roll(diceindex)){ 
+                    //if roll returns false it means that a farkle happened
+                    nsp.emit('newturn',NewGame.players[NewGame.turnindex]);
+                    console.log('It is ',NewGame.players[NewGame.turnindex].name,"'s turn")
+                    
+                }
                 
                 nsp.emit('roll_Return',NewGame.dice)
-                //NewGame.players[NewGame.turnindex].score++;
-                //NewGame.nextturn();
-                //nsp.emit('newturn', NewGame.turnindex)
+
             } else {
                 console.log(socket.id + ' tried to roll but it is ' + NewGame.players[NewGame.turnindex].id + ' turn')
             }
         })
         socket.on('bank',()=>{
-            NewGame.Bank(socket)
+            NewGame.Bank(socket);
+            nsp.emit('playerupdate', NewGame.players)
+            nsp.emit('newturn', NewGame.players[NewGame.turnindex])
         });
         nsp.emit('msg', {
             msg: socket.id + " joined",

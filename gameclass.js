@@ -1,7 +1,7 @@
 
 
 function ofakind(eval, dice) {
-    debugger
+    //debugger
     for (let i = 1; i<7; i++) {
         if (dice.filter((n) => {
                 return n == i
@@ -16,8 +16,8 @@ functions with the dice used in the first conditon filtered out till no more con
 this idea, writing it down here so I remember what I was thinking.
 */
 function Score(dice, score) {
-    debugger
-    console.log('score:',dice, score)
+    //debugger
+    //console.log('score:',dice, score)
     if (ofakind(6, dice)[0]) {
         score += 3000
         return score
@@ -28,19 +28,19 @@ function Score(dice, score) {
     }
     if (ofakind(4, dice)[0]) {
         score += 1000
-        console.log(ofakind(4, dice)[1])
+        //console.log(ofakind(4, dice)[1])
         return Score(dice.filter(x => x != ofakind(4, dice)[1]), score)
     }
     if (ofakind(3, dice)[0]) {
         //this needs work, maybe try to fit the 2 triplets condition into here
-        console.log("3 of a kind!")
+        //console.log("3 of a kind!")
         score += ofakind(3, dice)[1] * 100
         return Score(dice.filter(x => x != ofakind(3, dice)[1]), score)
     }
     if (dice.filter(x => {return x == 1 || x==5;}).length > 0) {
-        console.log(score)
+        //console.log(score)
         score += dice.filter(x => x == 1).length * 100+dice.filter(x=>x==5).length*50
-        console.log(score)
+        //console.log(score)
         //console.log(dice.filter(x => {return x != 1 || x != 5;},score))
         return Score(dice.filter(x => {return x != 1 && x != 5;}),score)
         
@@ -77,10 +77,12 @@ function game(Name) {
             value: null,
             avalible: true
         }, 0, 6)
+        this.turn.roll_count=0;
+        this.turn.score=0
     }
 
     this.roll = function (index) {
-        debugger
+        //debugger
         console.log("Index: ",index)
         for (let i = 0; i < index.length; i++) {
     
@@ -120,10 +122,12 @@ function game(Name) {
             console.log('farkle')
             this.turn.score=0
             this.nextturn()
+            return false
         }
         console.log(this.dice)
         this.roll_count++
-        debugger
+        return true
+       // debugger
     }
 
     this.addplayer = function addplayer(Player) {
@@ -146,27 +150,13 @@ function game(Name) {
     this.Bank = function Bank(socket) {
         console.log(this)
         if (socket.id == this.players[this.turnindex].id && this.started == true) {
-            this.players[this.turnindex].score += this.turn.score
+            this.players[this.turnindex].score = this.players[this.turnindex].score + this.turn.score + Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0)
             this.turn.score=0;
+            console.log(this.players)
         }
+        this.nextturn()
 
     }
 }
 module.exports = game;
 
-
-//This is test code.
-example = new game('game')
-example.dice=[
-{value:3,avalible:true},
-{value:3,avalible:true},
-{value:3,avalible:true},
-{value:2,avalible:true},
-{value:1,avalible:true},
-{value:2,avalible:true}
-]
-example.roll([0,1,2,3,4,5])
-//console.log(example.turn)
-//console.log('153: ',example.dice)
-console.log(ofakind(3,[4,4,4]))
-//console.log(Score([2,3,4,4,4,5],0))
