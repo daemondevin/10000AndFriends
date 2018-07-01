@@ -1,16 +1,12 @@
-var socket = io(window.location.pathname);
+import {isTrue, nameModal} from './modal.js'
+
+//var socket = io(window.location.pathname);
+export var socket= io(window.location.pathname);
 console.log(window.location.pathname, socket)
+console.log('modal imported?' ,isTrue())
 //console.log(document.getElementsByClassName('modalBG')[0].style.filter="blur(9px)"/*[0].style.filter/*.style.filter*/)
 
-function nameModal(show) {
-    if (show) {
-        document.getElementById("joinModal").style.display = "block";
-        document.getElementById("Master").style.filter = "blur(5px)";
-    } else {
-        document.getElementById("joinModal").style.display = "none";
-        document.getElementById("Master").style.filter = "none";
-    }
-}
+
 
 function displayButton(id, show) {
     if (show) {

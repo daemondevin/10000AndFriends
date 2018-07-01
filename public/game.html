@@ -17,7 +17,7 @@
         <div class="modalBox">
             Name:
             <input id='playername'>
-            <button onclick="join(document.getElementById('playername').value)">Join</button>
+            <button id='joinBtn' onclick="join(document.getElementById('playername').value)">Join</button>
         </div>
     </div>
     <div id="Master">
@@ -53,7 +53,7 @@
             <button onclick="sendmsg()">Send</button>
         </div>
     </div>
-    <script src='/scripts/main.js'></script>
+    <script type='module' src='/scripts/main.js'></script>
 </body>
 
 </html>
