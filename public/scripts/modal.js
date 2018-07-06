@@ -1,11 +1,5 @@
 
-import {socket} from './main.js'
-
-document.getElementById('joinBtn').addEventListener()
-
-export function isTrue(){
-    return true
-}
+//import {socket} from './main.js'
 
 export function nameModal(show) {
     if (show) {

@@ -1,11 +1,10 @@
-import {isTrue, nameModal} from './modal.js'
+import {nameModal} from './modal.js'
+//establish a socket connection to the server
+var socket = io(window.location.pathname);
 
-//var socket = io(window.location.pathname);
-export var socket= io(window.location.pathname);
-console.log(window.location.pathname, socket)
-console.log('modal imported?' ,isTrue())
-//console.log(document.getElementsByClassName('modalBG')[0].style.filter="blur(9px)"/*[0].style.filter/*.style.filter*/)
-
+//Show the nameModal to allow users entering the room to give themselves a name.
+nameModal(true);
+diceEventListeners();
 
 
 function displayButton(id, show) {
@@ -15,7 +14,7 @@ function displayButton(id, show) {
         document.getElementById(id).style.display = "none"
     }
 }
-nameModal(true);
+
 
 function rand() {
     return Math.floor(Math.random() * 6 + 1)
@@ -26,11 +25,11 @@ function rollanim(dice) {
     var interval = window.setInterval(function () {
         changes++
 
-        for (i = 0; i <= 5; i++) {
+        for (let i = 0; i <= 5; i++) {
             document.getElementById('d' + (i)).innerHTML = rand()
         }
         if (changes > 300) {
-            for (i = 0; i <= 5; i++) {
+            for (let i = 0; i <= 5; i++) {
                 document.getElementById('d' + (i)).innerHTML = dice[i].value;
                 console.log(dice[i].value)
             }
@@ -38,8 +37,6 @@ function rollanim(dice) {
         }
     }, 10)
 
-
-    //socket.emit('roll', index)
 }
 
 function gamestart() {
@@ -80,7 +77,7 @@ socket.on('playerupdate', (players) => {
     console.log(players)
     if (players.filter((player) => player.host)[0].id == socket.id) {
         console.log('player is host!')
-        displayButton('GameStart',true)
+        displayButton('GameStart', true)
     }
     let playerlist = document.getElementById('PlayerList');
     for (let i = 0; i < players.length; i++) {
@@ -100,9 +97,9 @@ socket.on('playerupdate', (players) => {
 })
 socket.on('newturn', (player) => {
     //console.log('it is the ' + index + ' players turn');
-    console.log(player.id,socket.id)
-    displayButton('RollBtn',player.id==socket.id)
-    displayButton('Bank',player.id==socket.id)
+    console.log(player.id, socket.id)
+    displayButton('RollBtn', player.id == socket.id)
+    displayButton('Bank', player.id == socket.id)
     console.log(document.getElementById('PlayerList').children)
     //document.getElementById('PlayerList').children[0].setAttribute('id', 'PlayerListTurn')
 })
@@ -114,21 +111,28 @@ socket.on('roll_Return', function (dice) {
 
 var local_dice = [rand(), rand(), rand(), rand(), rand(), rand()]
 var diceindex = [0, 1, 2, 3, 4, 5];
-(() => {
-    console.log(diceindex)
-    for (let i = 0; i < document.getElementsByClassName('dice').length; i++) {
 
+document.getElementById('joinBtn').addEventListener('click', function () {
+    join(document.getElementById('playername').value)
+})
+document.getElementById('GameStart').addEventListener('click',function(){gamestart()})
+document.getElementById('RollBtn').addEventListener('click',function(){socket.emit('roll', diceindex)})
+document.getElementById('Bank').addEventListener('click',function(){Bank()})
+
+//For sending Chat mesages
+document.getElementById('sendChatMsg').addEventListener('click',function(){sendmsg()})
+
+function diceEventListeners() {
+    for (let i = 0; i < document.getElementsByClassName('dice').length; i++) {
         document.getElementsByClassName('dice')[i].addEventListener('click', function () {
-            console.log(i, ' added dice event listener')
             if (diceindex.includes(i)) {
                 diceindex = diceindex.filter(j => j != i)
                 document.getElementById('d' + i).style.backgroundColor = 'grey'
-                
+
             } else {
                 diceindex.push(i)
                 document.getElementById('d' + i).style.backgroundColor = 'white'
             }
-            console.log('dice index: ', diceindex)
         })
     }
-})()
+}

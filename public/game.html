@@ -17,7 +17,7 @@
         <div class="modalBox">
             Name:
             <input id='playername'>
-            <button id='joinBtn' onclick="join(document.getElementById('playername').value)">Join</button>
+            <button id='joinBtn'>Join</button>
         </div>
     </div>
     <div id="Master">
@@ -32,9 +32,9 @@
                     <div id='d4' class='dice'>5</div>
                     <div id='d5' class='dice'>6</div>
                 </div>
-                <button id='GameStart' class='GameBtn' onclick="gamestart()">Start</button>
-                <button id='RollBtn' class='GameBtn' onclick="socket.emit('roll', diceindex)">Roll</button>
-                <button id='Bank' class='GameBtn' onclick="Bank()">Bank</button>
+                <button id='GameStart' class='GameBtn' >Start</button>
+                <button id='RollBtn' class='GameBtn' >Roll</button>
+                <button id='Bank' class='GameBtn' >Bank</button>
 
 
             </div>
@@ -50,7 +50,7 @@
 
             </ul>
             <input id='chatmessage'>
-            <button onclick="sendmsg()">Send</button>
+            <button id='sendChatMsg' onclick="sendmsg()">Send</button>
         </div>
     </div>
     <script type='module' src='/scripts/main.js'></script>
