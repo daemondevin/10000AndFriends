@@ -3,6 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const gameclass = require('./gameclass');
+const port = process.env.PORT || 3000
 
 var rooms = []
 
@@ -115,6 +116,6 @@ app.get('/api/getrooms', (req, res) => {
 app.use(express.static(__dirname + '/public'))
 
 
-http.listen(3000, function () {
-    console.log('listening on *:3000');
+http.listen(port, function () {
+    console.log('listening on port: '+port);
 });
