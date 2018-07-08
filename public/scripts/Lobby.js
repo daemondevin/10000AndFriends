@@ -1,6 +1,7 @@
 
 
 
+
 function getrooms(){
     //get list of avalible rooms from server api
     fetch('/api/getrooms')
