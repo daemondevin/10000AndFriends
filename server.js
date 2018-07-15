@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const gameclass = require('./gameclass');
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3030
 
 var rooms = []
 
@@ -96,6 +96,9 @@ app.get('/api/newgame/:gamename', (req, res) => {
                         return x.path == '/' + NewGame.Name
                     }), 1)
                 }
+                rooms=rooms.filter((room)=>{
+                    return !NewGame==room
+                })
             })
             console.log(app._router.stack)
         } catch (err) {
