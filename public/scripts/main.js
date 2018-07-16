@@ -96,11 +96,19 @@ socket.on('playerupdate', (players) => {
     }
 })
 socket.on('newturn', (player) => {
-    //console.log('it is the ' + index + ' players turn');
-    console.log(player.id, socket.id)
+    console.log(player.name)
+    console.log(document.getElementById('PlayerList').children[0].children[0].innerHTML==player.name)
+    for(let i=0;i<document.getElementById('PlayerList').children.length;i++){
+        console.log(document.getElementById('PlayerList').children[i].children[0].innerHTML,player.name)
+          if(document.getElementById('PlayerList').children[i].children[0].innerHTML==player.name){
+              console.log('match')
+              document.getElementById('PlayerList').children[i].children[0].innerHTML='>>>'+document.getElementById('PlayerList').children[i].children[0].innerHTML
+          }  
+    };
+    
     displayButton('RollBtn', player.id == socket.id)
     displayButton('Bank', player.id == socket.id)
-    console.log(document.getElementById('PlayerList').children)
+    
     //document.getElementById('PlayerList').children[0].setAttribute('id', 'PlayerListTurn')
 })
 socket.on('roll_Return', function (dice) {
