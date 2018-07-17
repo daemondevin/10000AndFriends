@@ -16,8 +16,7 @@ functions with the dice used in the first conditon filtered out till no more con
 this idea, writing it down here so I remember what I was thinking.
 */
 function Score(dice, score) {
-    //debugger
-    //console.log('score:',dice, score)
+
     if (ofakind(6, dice)[0]) {
         score += 3000
         return score
@@ -25,6 +24,12 @@ function Score(dice, score) {
     if (ofakind(5, dice)[0]) {
         score += 2000
         return Score(dice.filter(x => x != ofakind(5, dice)[1]), score)
+    }
+    if(dice.filter((value,index,self)=>{
+        return self.indexOf(value)==index;
+    }).length==6){
+        score += 1500
+        return score
     }
     if (ofakind(4, dice)[0]) {
         score += 1000
@@ -47,7 +52,7 @@ function Score(dice, score) {
     }
     return score
 }
-//console.log(Score([1,1,1,5,5,3], 0))
+
 
 
 const winscore = 100
