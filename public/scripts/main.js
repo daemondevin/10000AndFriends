@@ -105,10 +105,22 @@ socket.on('newturn', (player) => {
               document.getElementById('PlayerList').children[i].children[0].innerHTML='>>>'+document.getElementById('PlayerList').children[i].children[0].innerHTML
           }  
     };
-    
+    ismyturn= player.id==socket.id
     displayButton('RollBtn', player.id == socket.id)
     displayButton('Bank', player.id == socket.id)
-    
+    /*
+    thinking about doing this another way
+    if (player.id==socket.id){
+        diceEventListeners()
+        console.log('dice event listeners added')
+    }
+    else{
+        let oldDice = document.getElementById('dicecont');
+        let newDice = oldDice.cloneNode(true);
+        oldDice.parentElement.replaceChild(newDice,oldDice)
+        console.log('dice event listeners removed')
+    }
+    */
     //document.getElementById('PlayerList').children[0].setAttribute('id', 'PlayerListTurn')
 })
 socket.on('roll_Return', function (dice) {
@@ -119,6 +131,7 @@ socket.on('roll_Return', function (dice) {
 
 var local_dice = [rand(), rand(), rand(), rand(), rand(), rand()]
 var diceindex = [0, 1, 2, 3, 4, 5];
+var ismyturn = false;
 
 document.getElementById('joinBtn').addEventListener('click', function () {
     join(document.getElementById('playername').value)
@@ -132,7 +145,9 @@ document.getElementById('sendChatMsg').addEventListener('click',function(){sendm
 
 function diceEventListeners() {
     for (let i = 0; i < document.getElementsByClassName('dice').length; i++) {
+        console.log('adding listener to '+i+' dice')
         document.getElementsByClassName('dice')[i].addEventListener('click', function () {
+            if(ismyturn){
             if (diceindex.includes(i)) {
                 diceindex = diceindex.filter(j => j != i)
                 document.getElementById('d' + i).style.backgroundColor = 'grey'
@@ -140,7 +155,9 @@ function diceEventListeners() {
             } else {
                 diceindex.push(i)
                 document.getElementById('d' + i).style.backgroundColor = 'white'
-            }
+            }}
         })
     }
 }
+
+
