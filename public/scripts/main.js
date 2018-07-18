@@ -111,7 +111,14 @@ socket.on('newturn', (player) => {
           if(document.getElementById('PlayerList').children[i].children[0].innerHTML==player.name){
               console.log('match')
               document.getElementById('PlayerList').children[i].children[0].innerHTML='>>>'+document.getElementById('PlayerList').children[i].children[0].innerHTML
-          }  
+          }
+          else{
+              console.log(document.getElementById('PlayerList').children[i].children[0].innerHTML.substring(0,3))
+              if(document.getElementById('PlayerList').children[i].children[0].innerHTML.substring(0,3)=='>>>'){
+                document.getElementById('PlayerList').children[i].children[0].innerHTML=document.getElementById('PlayerList').children[i].children[0].innerHTML.substring(3)
+              }
+              
+          }
     };
     ismyturn= player.id==socket.id
     displayButton('RollBtn', player.id == socket.id)
