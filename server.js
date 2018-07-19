@@ -86,6 +86,9 @@ app.get('/api/newgame/:gamename', (req, res) => {
             })
             socket.on('disconnect', () => {
                 console.log(socket.id + ' disconnected')
+                nsp.emit('playerDisconect',NewGame.players.filter((player)=>{
+                    return player.id==socket.id
+                })[0])
                 if (app._router.stack.findIndex((x) => {
                         return x.path == '/' + NewGame.Name
                     }) != -1) {
@@ -99,6 +102,7 @@ app.get('/api/newgame/:gamename', (req, res) => {
                 rooms=rooms.filter((room)=>{
                     return !NewGame==room
                 })
+
             })
             console.log(app._router.stack)
         } catch (err) {

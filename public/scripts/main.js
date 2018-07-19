@@ -1,4 +1,4 @@
-import {nameModal} from './modal.js'
+import {nameModal,playerdisconnect} from './modal.js'
 //establish a socket connection to the server
 var socket = io(window.location.pathname);
 
@@ -49,6 +49,7 @@ function rollanim(dice) {
 
 function gamestart() {
     socket.emit('GameStart')
+    document.getElementById('GameStart').style.display='none'
 }
 
 function roll(dice) {
@@ -123,24 +124,14 @@ socket.on('newturn', (player) => {
     ismyturn= player.id==socket.id
     displayButton('RollBtn', player.id == socket.id)
     displayButton('Bank', player.id == socket.id)
-    /*
-    thinking about doing this another way
-    if (player.id==socket.id){
-        diceEventListeners()
-        console.log('dice event listeners added')
-    }
-    else{
-        let oldDice = document.getElementById('dicecont');
-        let newDice = oldDice.cloneNode(true);
-        oldDice.parentElement.replaceChild(newDice,oldDice)
-        console.log('dice event listeners removed')
-    }
-    */
-    //document.getElementById('PlayerList').children[0].setAttribute('id', 'PlayerListTurn')
+
 })
 socket.on('roll_Return', function (dice) {
     console.log(dice);
     rollanim(dice)
+})
+socket.on('playerDisconect', function (player){
+    playerdisconnect(player);
 })
 
 
