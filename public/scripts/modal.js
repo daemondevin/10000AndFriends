@@ -19,4 +19,5 @@ export function playerdisconnect(player){
     " means this game is over.  You will be re-routed to the lobby in a moment."
     document.getElementById("joinModal").style.display = "block";
     document.getElementById("Master").style.filter = "blur(5px)";
+    window.setTimeout(()=>{window.location.href = '../'},1000*5)
 }
