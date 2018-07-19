@@ -62,6 +62,10 @@ function Bank() {
 
 function sendmsg() {
     socket.emit('msg', document.getElementById('chatmessage').value)
+    let chatlog = document.getElementById('chatlog');
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode('You: '+document.getElementById('chatmessage').value))
+    chatlog.appendChild(li)
     document.getElementById('chatmessage').value = ""
 }
 socket.on('msg', function (msg) {

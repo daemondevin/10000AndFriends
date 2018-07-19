@@ -79,9 +79,9 @@ app.get('/api/newgame/:gamename', (req, res) => {
             socket.on('msg', (msg) => {
                 console.log(socket.id + ' sent: ' + msg)
 
-                nsp.emit('msg', {
+                socket.broadcast.emit('msg', {
                     msg: msg,
-                    sender: socket.id
+                    sender: NewGame.players.filter((player)=>socket.id==player.id)[0].name
                 })
             })
             socket.on('disconnect', () => {
