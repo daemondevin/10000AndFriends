@@ -33,20 +33,20 @@ function Score(dice, score) {
     }
     if (ofakind(4, dice)[0]) {
         score += 1000
-        //console.log(ofakind(4, dice)[1])
+        //(ofakind(4, dice)[1])
         return Score(dice.filter(x => x != ofakind(4, dice)[1]), score)
     }
     if (ofakind(3, dice)[0]) {
         //this needs work, maybe try to fit the 2 triplets condition into here
-        //console.log("3 of a kind!")
+        //("3 of a kind!")
         score += ofakind(3, dice)[1] * 100
         return Score(dice.filter(x => x != ofakind(3, dice)[1]), score)
     }
     if (dice.filter(x => {return x == 1 || x==5;}).length > 0) {
-        //console.log(score)
+        //(score)
         score += dice.filter(x => x == 1).length * 100+dice.filter(x=>x==5).length*50
-        //console.log(score)
-        //console.log(dice.filter(x => {return x != 1 || x != 5;},score))
+        //(score)
+        //(dice.filter(x => {return x != 1 || x != 5;},score))
         return Score(dice.filter(x => {return x != 1 && x != 5;}),score)
         
     }
@@ -88,10 +88,10 @@ function game(Name) {
 
     this.roll = function (index) {
         //debugger
-        console.log("Index: ",index)
+        ("Index: ",index)
         for (let i = 0; i < index.length; i++) {
     
-            //console.log(i,index[i],this.dice[index[i]].value,Math.floor(Math.random()*6+1))
+            //(i,index[i],this.dice[index[i]].value,Math.floor(Math.random()*6+1))
             this.dice[index[i]] = {
                 value: Math.floor(Math.random() * 6 + 1),
                 avalible: this.dice[index[i]].avalible
@@ -103,7 +103,6 @@ function game(Name) {
         //set all the dice not in the index to unavalible
         for (let i=0;i< 6;i++){
             if (index.includes(i)==false){
-                console.log('I should be false for ',i)
                 if(this.dice[i].avalible==true){
                     scoreddice.push(this.dice[i].value)
                     this.dice[i].avalible=false;
@@ -112,24 +111,17 @@ function game(Name) {
             }
         } 
         //debugger
-        console.log(Score(scoreddice.map(y => y.value),0))
+        
         this.turn.score+=Score(scoreddice,0)
 
-        console.log(this.turn.score)
-        /*if (!index.some(x => {
-                this.dice[x].avalible == false
-            })) {
-            console.log('one of these dice should not be avalible')
-        }*/
-        console.log('112',this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0))
         if(Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0)==0){
             //farkle occured
-            console.log('farkle')
+            ('farkle')
             this.turn.score=0
             this.nextturn()
             return false
         }
-        console.log(this.dice)
+        (this.dice)
         this.roll_count++
         return true
        // debugger
@@ -137,7 +129,7 @@ function game(Name) {
 
     this.addplayer = function addplayer(Player) {
         this.players.push(Player)
-        console.log(this)
+        
     }
 
     this.isHost = function isHost(socket) {
@@ -153,13 +145,18 @@ function game(Name) {
     }
 
     this.Bank = function Bank(socket) {
-        console.log(this)
+        
         if (socket.id == this.players[this.turnindex].id && this.started == true) {
-            this.players[this.turnindex].score = this.players[this.turnindex].score + this.turn.score + Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0)
+            //debugger
+            this.turn.score += Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0)
+            if (!(this.players[this.turnindex].score == 0)||this.turn.score>=500){
+            this.players[this.turnindex].score +=  this.turn.score 
+            }
             this.turn.score=0;
-            console.log(this.players)
+            this.nextturn()
+            
         }
-        this.nextturn()
+        //this.nextturn()
 
     }
 }

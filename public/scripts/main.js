@@ -84,7 +84,7 @@ function join(playername) {
     });
     nameModal(false)
 }
-socket.on('playerupdate', (players) => {
+socket.on('playerupdate', (players,turnindex) => {
     //in production app we should NOT share socket ID's
     document.getElementById('PlayerList').innerHTML = "";
     console.log(players)
@@ -98,9 +98,14 @@ socket.on('playerupdate', (players) => {
         let li = document.createElement('li');
         let name = document.createElement('div');
         let score = document.createElement('div');
+
         li.appendChild(name);
         li.appendChild(score);
-        name.innerHTML = players[i].name
+        if(i==turnindex){
+        name.innerHTML = ">"+players[i].name
+        }
+        else{
+        name.innerHTML = players[i].name}
         score.innerHTML = players[i].score
         name.setAttribute('id', 'PlayerListName')
         score.setAttribute('id', 'PlayerListScore')
@@ -108,8 +113,9 @@ socket.on('playerupdate', (players) => {
         playerlist.appendChild(li)
     }
 })
+
 socket.on('newturn', (player) => {
-    console.log(player.name)
+    /*console.log(player.name)
     console.log(document.getElementById('PlayerList').children[0].children[0].innerHTML==player.name)
     for(let i=0;i<document.getElementById('PlayerList').children.length;i++){
         console.log(document.getElementById('PlayerList').children[i].children[0].innerHTML,player.name)
@@ -124,8 +130,11 @@ socket.on('newturn', (player) => {
               }
               
           }
-    };
+    };*/
     ismyturn= player.id==socket.id
+    if(ismyturn){
+        diceindex = [0, 1, 2, 3, 4, 5];
+    }
     displayButton('RollBtn', player.id == socket.id)
     displayButton('Bank', player.id == socket.id)
 
