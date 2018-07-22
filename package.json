@@ -12,7 +12,7 @@
     "websocket",
     "dice"
   ],
-  "author": "Alex C. Nate C.",
+  "author": "Alex C.",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
