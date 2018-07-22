@@ -1,6 +1,6 @@
 html{
     --background-main:linear-gradient(rgb(255, 255, 255),rgb(180, 180, 180));
-    --secondary-color:rgb(255, 238, 0);
+    --secondary-color:rgb(255, 115, 0);
     --button-color:rgb(235, 0, 34);
     --maincolor:rgb(255, 0, 34);
     --dice-de-select-color:rgb(150, 150, 150);
@@ -35,8 +35,8 @@ button{
 h5{
     font-family: 'Galada',cursive;
     margin:0px;
-    margin-left:5%;
-    margin-top:2.5%;
+    margin-left:5px;
+    margin-top:10px;
     font-weight: normal;
     font-size: 80px;
     height:80px;
@@ -96,6 +96,22 @@ h5{
 } 
 #gamelist li button:hover{
     background: var(--secondary-color);
+}
+.NewGame{
+    width:100%;
+    height:70px;
+    display: block;
+}
+.NewGame input{
+    width:80%;
+    padding:0%;
+    border-width:0px;
+    height:100%;
+}
+.NewGame button{
+    width: 20%;
+    height:100%;
+    float: right;
 }
 #PlayerListCont{
     
@@ -229,7 +245,7 @@ h5{
     z-index: 2;
     background-color:rgb(44, 44, 44);
     width:70%;
-    height:70%;
+    height:40%;
     filter:none;
     vertical-align: middle;
     animation-name:modalopen;
