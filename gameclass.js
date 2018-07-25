@@ -87,18 +87,13 @@ function game(Name) {
     }
 
     this.roll = function (index) {
-        //debugger
         ("Index: ",index)
         for (let i = 0; i < index.length; i++) {
-    
-            //(i,index[i],this.dice[index[i]].value,Math.floor(Math.random()*6+1))
             this.dice[index[i]] = {
                 value: Math.floor(Math.random() * 6 + 1),
                 avalible: this.dice[index[i]].avalible
-            } //.value=Math.floor(Math.random()*6+1)
-
+            } 
         }
-        //debugger
         var scoreddice =[]
         //set all the dice not in the index to unavalible
         for (let i=0;i< 6;i++){
@@ -110,15 +105,11 @@ function game(Name) {
                 
             }
         } 
-        //debugger
-        
         this.turn.score+=Score(scoreddice,0)
 
         if(Score(this.dice.filter(x => {return x.avalible==true}).map(y=>y.value),0)==0){
             //farkle occured
-            ('farkle')
             this.turn.score=0
-            this.nextturn()
             return false
         }
         (this.dice)

@@ -56,15 +56,17 @@ app.get('/api/newgame/:gamename', (req, res) => {
                 if (socket.id == NewGame.players[NewGame.turnindex].id && NewGame.started == true) {
                     console.log("player rolled index: ",diceindex);
                     if (!NewGame.roll(diceindex)) {
+                        nsp.emit('roll_Return',NewGame.dice)
+                        NewGame.nextturn()
                         //if roll returns false it means that a farkle happened
                         nsp.emit('newturn', NewGame.players[NewGame.turnindex]);
                         nsp.emit('playerupdate', NewGame.players,NewGame.turnindex)
                         console.log('It is ', NewGame.players[NewGame.turnindex].name, "'s turn")
 
                     }
-
-                    nsp.emit('roll_Return', NewGame.dice)
-
+                    else{
+                        nsp.emit('roll_Return', NewGame.dice)
+                    }
                 } else {
                     console.log(socket.id + ' tried to roll but it is ' + NewGame.players[NewGame.turnindex].id + ' turn')
                 }
