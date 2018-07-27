@@ -21,12 +21,12 @@ function rand() {
 }
 
 function rollanim(dice) {
-    for(let j =0;j<=5;j++){
-        if(dice[j].avalible){
-            document.getElementById('d'+(j)).style.backgroundColor='white'
+    for(let i =0;i<=5;i++){
+        if(dice[i].avalible){
+            document.getElementById('d'+(i)).style.backgroundColor='white'
         }
         else{
-            document.getElementById('d'+(j)).style.backgroundColor='grey'
+            document.getElementById('d'+(i)).style.backgroundColor='grey'
         }
     }
     var changes = 0;
@@ -34,16 +34,21 @@ function rollanim(dice) {
         changes++
 
         for (let i = 0; i <= 5; i++) {
-            document.getElementById('d' + (i)).innerHTML = rand()
+            if(dice[i].avalible){
+                document.getElementById('d' + (i)).setAttribute('src','/img/dice'+rand()+'.svg')
+            }
         }
-        if (changes > 300) {
+        if (changes > 30) {
             for (let i = 0; i <= 5; i++) {
-                document.getElementById('d' + (i)).innerHTML = dice[i].value;
-                console.log(dice[i].value)
+                //let diceElem = document.createElement('svg')
+                //diceElem.setAttribute('src','/img/dice'+dice[i].value+".svg")
+
+                document.getElementById('d' + (i)).setAttribute('src','/img/dice'+dice[i].value+'.svg')
+        
             }
             window.clearInterval(interval)
         }
-    }, 10)
+    }, 100)
 
 }
 
@@ -115,22 +120,7 @@ socket.on('playerupdate', (players,turnindex) => {
 })
 
 socket.on('newturn', (player) => {
-    /*console.log(player.name)
-    console.log(document.getElementById('PlayerList').children[0].children[0].innerHTML==player.name)
-    for(let i=0;i<document.getElementById('PlayerList').children.length;i++){
-        console.log(document.getElementById('PlayerList').children[i].children[0].innerHTML,player.name)
-          if(document.getElementById('PlayerList').children[i].children[0].innerHTML==player.name){
-              console.log('match')
-              document.getElementById('PlayerList').children[i].children[0].innerHTML='>>>'+document.getElementById('PlayerList').children[i].children[0].innerHTML
-          }
-          else{
-              console.log(document.getElementById('PlayerList').children[i].children[0].innerHTML.substring(0,3))
-              if(document.getElementById('PlayerList').children[i].children[0].innerHTML.substring(0,3)=='>>>'){
-                document.getElementById('PlayerList').children[i].children[0].innerHTML=document.getElementById('PlayerList').children[i].children[0].innerHTML.substring(3)
-              }
-              
-          }
-    };*/
+
     ismyturn= player.id==socket.id
     if(ismyturn){
         diceindex = [0, 1, 2, 3, 4, 5];
