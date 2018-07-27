@@ -18,8 +18,6 @@ app.get('/api/newgame/:gamename', (req, res) => {
     rooms.push(NewGame);
     nsp.on('connection', (socket) => {
         try {
-            console.log(socket.id);
-            console.log(NewGame)
             socket.on('playerjoin', (player) => {
                 if (!NewGame.started) {
                     if (NewGame.players.length == 0) {
@@ -96,9 +94,9 @@ app.get('/api/newgame/:gamename', (req, res) => {
                 if (app._router.stack.findIndex((x) => {
                         return x.path == '/' + NewGame.Name
                     }) != -1) {
-                    console.log(app._router.stack.findIndex((x) => {
+                    app._router.stack.findIndex((x) => {
                         return x.path == '/' + NewGame.Name
-                    }))
+                    })
                     app._router.stack.splice(app._router.stack.findIndex((x) => {
                         return x.path == '/' + NewGame.Name
                     }), 1)
