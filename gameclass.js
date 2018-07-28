@@ -12,8 +12,7 @@ function ofakind(eval, dice) {
     return [false]
 }
 /*the idea of this function is that we start checking the dice for the highest scoring roll conditions first, then we run re-run the 
-functions with the dice used in the first conditon filtered out till no more condtions are met and return the score.  Pretty proud of
-this idea, writing it down here so I remember what I was thinking.
+functions with the dice used in the first conditon filtered out till no more condtions are met and return the score.  , writing it down here so I remember what I was thinking.
 */
 function Score(dice, score) {
 
