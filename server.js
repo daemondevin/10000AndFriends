@@ -121,6 +121,9 @@ app.get('/api/getrooms', (req, res) => {
         rooms: rooms
     })
 })
+app.get('/rules',(req,res) => {
+    res.sendFile(__dirname+'/public/rules.html')
+})
 
 app.use(express.static(__dirname + '/public'))
 

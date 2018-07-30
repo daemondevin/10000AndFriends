@@ -1,4 +1,4 @@
-import {nameModal,playerdisconnect} from './modal.js'
+import {nameModal,playerdisconnect,showrulesmodal} from './modal.js'
 //establish a socket connection to the server
 var socket = io(window.location.pathname);
 

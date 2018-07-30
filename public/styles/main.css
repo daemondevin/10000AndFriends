@@ -4,6 +4,7 @@ html{
     --button-color:rgb(235, 0, 34);
     --maincolor:rgb(255, 0, 34);
     --dice-de-select-color:rgb(150, 150, 150);
+    --modal-bg:rgb(44, 44, 44);
     background: rgb(180, 180, 180);
     font-family: 'Anton', sans-serif;
     color:var(--maincolor);
@@ -246,15 +247,15 @@ h5{
 }
 .modalBox{
     z-index: 2;
-    background-color:rgb(44, 44, 44);
-    width:70%;
+    background-color:var(--modal-bg);
+    width:90%;
     /*height:20%;*/
-    padding: 15% 0% 15% 0%;
+    padding: 2.5% 0% 2.5% 0%;
     filter:none;
     vertical-align: middle;
     animation-name:modalopen;
     animation-duration:2s;
-    margin:15%;
+    margin:5%;
     border-top: 10px solid;
     justify-content: center;
     display: flex;
@@ -265,6 +266,24 @@ h5{
     border: 0px;
     height:20px;
     width: 50%;
+}
+.ruleframe{
+    width:90%;
+    border-width: 0px;
+    height:500px;
+}
+.modalClose{
+    width:50px;
+    height:50px;
+    position: absolute;
+    top:20px;
+    right:20px;
+    border-radius: 50%;
+    border:white solid 2px;
+    font-size:40px;
+    line-height: 0px;
+    display: inline-block;
+    /*background-color:rgb(0,0,0,0)*/
 }
 
 #Master{

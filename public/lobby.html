@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,27 @@
     <title>Farkle Lobby</title>
     <link href="https://fonts.googleapis.com/css?family=Anton|Galada" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/styles/main.css">
-    <script src='/scripts/Lobby.js'></script>
+    <script type='module' src='/scripts/Lobby.js'></script>
 </head>
-<body>
-    <h5>Farkle</h5>
-    <ul id='gamelist'>
 
-    </ul>
-    <div class='NewGame'><input id='NewGameName'><button id='NewGamebtn' onclick="createnewgame()">Create New Game Room</button></div>
+<body>
+    <div id="Modal" class="modalBG">
+        <div id="modalBox" class="modalBox">
+        </div>
+    </div>
+    <div id='Master'>
+        <h5>Farkle</h5>
+        <button id='rulesBtn'>Rules</button>
+        <ul id='gamelist'>
+
+        </ul>
+        <div class='NewGame'>
+            <input id='NewGameName'>
+            <button id='NewGamebtn' onclick="createnewgame()">Create New Game Room</button>
+        </div>
+    </div>
 
     <!--<button onclick="location.href='/alex';">alex</button>-->
 </body>
+
 </html>

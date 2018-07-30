@@ -1,7 +1,7 @@
 
+import {showrulesmodal} from './modal.js'
 
-
-
+document.getElementById('NewGamebtn').addEventListener('click',createnewgame)
 function getrooms(){
     //get list of avalible rooms from server api
     fetch('/api/getrooms')
@@ -11,7 +11,7 @@ function getrooms(){
         var gamelist = document.getElementById('gamelist')
         //remover all li from game list
         gamelist.innerHTML=""
-        for(i=0; i<data.rooms.length;i++){
+        for(let i=0; i<data.rooms.length;i++){
             let li = document.createElement("li");
             let joinbtn =document.createElement("button")
             joinbtn.setAttribute('onclick',"onclick=location.href='/"+data.rooms[i].Name+"'")
