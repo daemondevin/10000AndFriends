@@ -274,6 +274,7 @@ h5{
 }
 .modalBox div{
     width:90%;
+    display:block;
 }
 .modalBox div button{
     height:100%;

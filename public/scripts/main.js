@@ -1,4 +1,6 @@
 import {nameModal,playerdisconnect,showrulesmodal} from './modal.js'
+import './enterkey.js'
+import { listenEnter } from './enterkey.js';
 //establish a socket connection to the server
 var socket = io(window.location.pathname);
 
@@ -146,12 +148,15 @@ document.getElementById('joinBtn').addEventListener('click', function () {
     join(document.getElementById('playername').value)
 })
 document.getElementById('GameStart').addEventListener('click',function(){gamestart()})
+
 document.getElementById('RollBtn').addEventListener('click',function(){socket.emit('roll', diceindex)})
 document.getElementById('Bank').addEventListener('click',function(){Bank()})
-
 //For sending Chat mesages
 document.getElementById('sendChatMsg').addEventListener('click',function(){sendmsg()})
-
+listenEnter('playername',function () {
+    join(document.getElementById('playername').value)
+})
+listenEnter('chatmessage',sendmsg)
 function diceEventListeners() {
     for (let i = 0; i < document.getElementsByClassName('dice').length; i++) {
         console.log('adding listener to '+i+' dice')
