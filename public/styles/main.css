@@ -65,6 +65,9 @@ h5{
     box-shadow: 6px 6px 6px 3px rgba(161, 161, 161, 0.774);
     display: none;
 }
+#GameStart{
+    display: block;
+}
 #gamelist{
     background: rgba(255, 255, 255);
     height:500px;

@@ -54,7 +54,7 @@ function rollanim(dice) {
 
 function gamestart() {
     socket.emit('GameStart')
-    document.getElementById('GameStart').style.display='none'
+    displayButton('GameStart',false)
 }
 
 function roll(dice) {
@@ -93,9 +93,9 @@ socket.on('playerupdate', (players,turnindex) => {
     //in production app we should NOT share socket ID's
     document.getElementById('PlayerList').innerHTML = "";
     console.log(players)
-    if (players.filter((player) => player.host)[0].id == socket.id) {
-        console.log('player is host!')
-        displayButton('GameStart', true)
+    if (players.filter((player) => player.host)[0].id != socket.id) {
+        console.log('player is not host!')
+        displayButton('GameStart', false)
     }
     let playerlist = document.getElementById('PlayerList');
     for (let i = 0; i < players.length; i++) {
