@@ -30,7 +30,7 @@ button{
     margin: 0px;
     font-family: 'Galada',cursive;
     color:white;
-    height:10%;
+    height:20px;
     width:100px;
 }
 h5{
@@ -262,13 +262,21 @@ h5{
     border-top: 10px solid;
     justify-content: center;
     display: flex;
+    flex-wrap: wrap;
 }
 .modalBox input{
     background-color: whitesmoke;
     font-size: 20px;
     border: 0px;
-    height:20px;
+    height:100%;
     width: 50%;
+    padding: 0px;
+}
+.modalBox div{
+    width:90%;
+}
+.modalBox div button{
+    height:100%;
 }
 .ruleframe{
     width:90%;
