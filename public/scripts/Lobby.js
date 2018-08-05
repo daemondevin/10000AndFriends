@@ -1,5 +1,5 @@
 
-import {showrulesmodal} from './modal.js'
+import { listenEnter } from './enterkey.js';
 
 document.getElementById('NewGamebtn').addEventListener('click',createnewgame)
 function getrooms(){
@@ -32,3 +32,4 @@ function createnewgame(){
 
 
 getrooms()
+listenEnter('NewGameName',getrooms)
