@@ -32,4 +32,4 @@ function createnewgame(){
 
 
 getrooms()
-listenEnter('NewGameName',getrooms)
+listenEnter('NewGameName',createnewgame)
