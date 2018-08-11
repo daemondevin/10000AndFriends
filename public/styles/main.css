@@ -57,6 +57,10 @@ h5{
 #TopContLeft{
     width:500px;
 }
+.topButonCont{
+    width: 100px;
+    margin:0px;
+}
 .GameBtn{
     height: 50px;
     width:50px;
@@ -278,6 +282,14 @@ h5{
 }
 .modalBox div button{
     height:100%;
+}
+textarea{
+    width:100%;
+    background-color: var(--modal-bg);
+    color: var(--maincolor);
+    resize: none;
+    border: 0px solid #888; 
+    outline: none;
 }
 .ruleframe{
     width:90%;
