@@ -10,10 +10,9 @@ var rooms = []
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/lobby.html')
 })
-app.get('/api/newgame/:gamename', (req, res) => {
-
-    res.send(req.params.gamename)
-    var NewGame = new gameclass(req.params.gamename)
+app.get('/api/newgame/', (req, res) => {
+    var NewGame = new gameclass()
+    res.send({Name:NewGame.Name})
     var nsp = io.of('/' + NewGame.Name)
     rooms.push(NewGame);
     nsp.on('connection', (socket) => {

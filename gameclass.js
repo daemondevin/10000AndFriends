@@ -56,8 +56,8 @@ function Score(dice, score) {
 
 const winscore = 100
 
-function game(Name) {
-    this.Name = Name
+function game() {
+    this.Name = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
     this.players = []
     this.messages = []
     this.started = false;
