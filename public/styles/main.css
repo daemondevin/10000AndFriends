@@ -45,8 +45,8 @@ h5{
     border-width: 2px;
     /*border-style:solid;*/
     /*border-color:rgb(130,101,167);*/
-    padding:1%;
-    padding-right: 4%;
+    padding:10px;
+    padding-right: 4px;
     display: inline-block;
     
 }
