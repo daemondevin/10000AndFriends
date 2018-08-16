@@ -26,11 +26,11 @@ li{
 button{
     background: var(--button-color);
     border: 0px;
-    padding: 0px;
+    padding: 10px;
     margin: 0px;
     font-family: 'Galada',cursive;
     color:white;
-    height:20px;
+    height:40px;
     width:100px;
 }
 h5{
@@ -127,7 +127,7 @@ h5{
 #PlayerListCont{
     
     height:200px;
-    width:500px;
+    width:400px;
     margin:0% 0% 0% 2.5%;
     padding: 0%;
     overflow:auto;
@@ -180,12 +180,12 @@ h5{
     margin:2%;
     border-color: var(--maincolor);
     border-width:30%;
-    padding:2%;
+    padding:0%;
     border-style: solid;
 }
 #chat input{
     /*position: absolute;*/
-    width:83%;
+    width:80%;
     /*bottom: 0px;*/
     float: left;
     margin:0px auto;
@@ -196,8 +196,9 @@ h5{
     margin-bottom: 5%;
 }
 #chat button{
-    width:10%;
+    width:20%;
     margin:0%;
+    padding:0%;
     height:10%;
     float:right;
 }
