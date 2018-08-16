@@ -1,0 +1,17 @@
+.lobby_cont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.intro_text{
+    width:80%;
+    color:white;
+    background-color: var(--maincolor);
+    padding:2.5%;
+}
+#NewGamebtn{
+    width:30%;
+    height: 150px;
+    padding:10px;
+    font-size:150%
+}
