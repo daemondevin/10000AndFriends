@@ -1,7 +1,8 @@
-function ofakind(eval, dice) {
+function ofakind(eval, arr) {
     //debugger
+    console.log(arr)
     for (let i = 1; i < 7; i++) {
-        if (dice.filter((n) => {
+        if (arr.filter((n) => {
                 return n == i
             }).length == eval) {
             return [true, i]
@@ -13,10 +14,31 @@ function ofakind(eval, dice) {
 functions with the dice used in the first conditon filtered out till no more condtions are met and return the score.  , writing it down here so I remember what I was thinking.
 */
 function Score(dice, score) {
-
-    if (ofakind(6, dice)[0]) {
-        score += 3000
-        return score
+    if (dice.length == 6) {
+        if (ofakind(6, dice)[0]) {
+            score += 3000
+            return score
+        }
+        if (dice.filter((value, index, self) => {
+                return self.indexOf(value) == index;
+            }).length == 6) {
+            score += 1500
+            return score
+        }
+        if(ofakind(2,dice)){
+            if (ofakind(3, dice.filter(x => x != ofakind(3, dice)[0]))){
+                if (ofakind(3, dice.filter(x => x != ofakind(3, dice)[0]).filter(x => x != ofakind(3, dice)[0]))){
+                    return 2500
+                }
+            }
+        }
+        //check for 2 triplets
+        if (ofakind(3, dice)[0]) {
+            //if there are 3 of a kind check if the remainging dice are 3 of a kind this catches the 2 triplets condition
+            if (ofakind(3, dice.filter(x => x != ofakind(3, dice)[0]))) {
+                return 1500
+            }
+        }
     }
     if (ofakind(5, dice)[0]) {
         score += 2000
