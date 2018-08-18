@@ -1,7 +1,7 @@
 import {
     listenEnter
 } from './enterkey.js';
-
+import './modal.js'
 document.getElementById('NewGamebtn').addEventListener('click', createnewgame)
 
 
