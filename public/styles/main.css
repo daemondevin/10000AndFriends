@@ -53,9 +53,11 @@ h5{
     font-family: 'Galada',cursive;
     margin:0px;
     margin-left:5px;
+    margin-right:5px;
     margin-top:10px;
     font-weight: normal;
     font-size: 80px;
+    width:380px;
     height:80px;
     line-height: 60px;
     border-width: 2px;
