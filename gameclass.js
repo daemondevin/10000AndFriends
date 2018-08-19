@@ -1,6 +1,4 @@
 function ofakind(eval, arr) {
-    //debugger
-    console.log(arr)
     for (let i = 1; i < 7; i++) {
         if (arr.filter((n) => {
                 return n == i
@@ -25,17 +23,21 @@ function Score(dice, score) {
             score += 1500
             return score
         }
-        if(ofakind(2,dice)){
-            if (ofakind(3, dice.filter(x => x != ofakind(3, dice)[0]))){
-                if (ofakind(3, dice.filter(x => x != ofakind(3, dice)[0]).filter(x => x != ofakind(3, dice)[0]))){
+
+        if(ofakind(2,dice)[0]){
+            let next= dice.filter(x=> x != ofakind(2,dice)[1])
+            if (ofakind(2, next)[0]){
+                next=next.filter(x=> x != ofakind(2,next)[1])
+                if (ofakind(2, next)[0]){
                     return 2500
                 }
             }
         }
         //check for 2 triplets
         if (ofakind(3, dice)[0]) {
+            let next= dice.filter(x=> x != ofakind(3,dice)[1])
             //if there are 3 of a kind check if the remainging dice are 3 of a kind this catches the 2 triplets condition
-            if (ofakind(3, dice.filter(x => x != ofakind(3, dice)[0]))) {
+            if (ofakind(3, next)[0]){
                 return 1500
             }
         }
