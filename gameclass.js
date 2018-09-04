@@ -142,7 +142,6 @@ function game() {
             this.turn.score = 0
             return false
         }
-        (this.dice)
         this.roll_count++
             return true
         // debugger
