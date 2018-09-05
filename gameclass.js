@@ -139,7 +139,6 @@ function game() {
         }
         console.log(this.turn.roll_count,DiceHeld)
         if(!DiceHeld && this.turn.roll_count > 0){
-            console.log("you didn't hold any dice!")
             return false
         }
         this.turn.score += Score(scoreddice, 0)
