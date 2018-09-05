@@ -115,7 +115,7 @@ function game() {
     }
 
     this.roll = function (index) {
-        ("Index: ", index)
+        console.log("Index: ", index)
         for (let i = 0; i < index.length; i++) {
             this.dice[index[i]] = {
                 value: Math.floor(Math.random() * 6 + 1),
@@ -124,14 +124,23 @@ function game() {
         }
         var scoreddice = []
         //set all the dice not in the index to unavalible
+        //use DiceHeld to determine if a dice was selected to be held per the rules of Farkle
+        
+        let DiceHeld = false
         for (let i = 0; i < 6; i++) {
             if (index.includes(i) == false) {
                 if (this.dice[i].avalible == true) {
+                    DiceHeld = true
                     scoreddice.push(this.dice[i].value)
                     this.dice[i].avalible = false;
                 }
 
             }
+        }
+        console.log(this.turn.roll_count,DiceHeld)
+        if(!DiceHeld && this.turn.roll_count > 0){
+            console.log("you didn't hold any dice!")
+            return false
         }
         this.turn.score += Score(scoreddice, 0)
 
@@ -142,7 +151,7 @@ function game() {
             this.turn.score = 0
             return false
         }
-        this.roll_count++
+        this.turn.roll_count++
             return true
         // debugger
     }
