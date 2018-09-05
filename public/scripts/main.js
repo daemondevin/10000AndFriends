@@ -140,7 +140,7 @@ socket.on('playerDisconect', function (player){
 })
 
 
-var local_dice = [rand(), rand(), rand(), rand(), rand(), rand()]
+
 var diceindex = [0, 1, 2, 3, 4, 5];
 var ismyturn = false;
 
