@@ -140,7 +140,7 @@ socket.on('playerDisconect', function (player){
 })
 
 
-var local_dice = [rand(), rand(), rand(), rand(), rand(), rand()]
+
 var ismyturn = false;
 
 document.getElementById('joinBtn').addEventListener('click', function () {
