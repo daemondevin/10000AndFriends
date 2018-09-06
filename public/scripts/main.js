@@ -127,20 +127,24 @@ socket.on('newturn', (player) => {
     if(ismyturn){
         diceindex = [0, 1, 2, 3, 4, 5];
     }
-    displayButton('RollBtn', player.id == socket.id)
-    displayButton('Bank', player.id == socket.id)
+    else{
+        displayButton('Bank',false)
+    }
+    displayButton('RollBtn', ismyturn)
+    
 
 })
 socket.on('roll_Return', function (dice) {
-    console.log(dice);
+    console.log(ismyturn);
     rollanim(dice)
+    displayButton('Bank', ismyturn)
 })
 socket.on('playerDisconect', function (player){
     playerdisconnect(player);
 })
 
 
-
+var diceindex = [0,1,2,3,4,5]
 var ismyturn = false;
 
 document.getElementById('joinBtn').addEventListener('click', function () {
