@@ -144,12 +144,7 @@ socket.on('playerDisconect', function (player){
 })
 
 
-<<<<<<< HEAD
 var diceindex = [0,1,2,3,4,5]
-=======
-
-var diceindex = [0, 1, 2, 3, 4, 5];
->>>>>>> master
 var ismyturn = false;
 
 document.getElementById('joinBtn').addEventListener('click', function () {
