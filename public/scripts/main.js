@@ -135,7 +135,9 @@ socket.on('newturn', (player) => {
 
 })
 socket.on('roll_Return', function (dice) {
-    console.log(ismyturn);
+    console.log(dice);
+    diceLocal=dice
+    //avalibleDice = dice.filter(x=>{console.log(x);return x.avalible}).map((y,i)=>{return i})
     rollanim(dice)
     displayButton('Bank', ismyturn)
 })
@@ -143,8 +145,8 @@ socket.on('playerDisconect', function (player){
     playerdisconnect(player);
 })
 
-
-var diceindex = [0,1,2,3,4,5]
+var diceLocal=[]
+var diceindex = [0,1,2,3,4,5];
 var ismyturn = false;
 
 document.getElementById('joinBtn').addEventListener('click', function () {
@@ -162,9 +164,9 @@ listenEnter('playername',function () {
 listenEnter('chatmessage',sendmsg)
 function diceEventListeners() {
     for (let i = 0; i < document.getElementsByClassName('dice').length; i++) {
-        console.log('adding listener to '+i+' dice')
         document.getElementsByClassName('dice')[i].addEventListener('click', function () {
-            if(ismyturn){
+            console.log(ismyturn,diceLocal[i].avalible)
+            if(ismyturn && diceLocal[i].avalible){
             if (diceindex.includes(i)) {
                 diceindex = diceindex.filter(j => j != i)
                 document.getElementById('d' + i).style.backgroundColor = 'grey'
