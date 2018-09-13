@@ -69,14 +69,18 @@ app.get('/api/newgame/', (req, res) => {
                 }
             })
             socket.on('bank', () => {
-                NewGame.Bank(socket);
-                nsp.emit('playerupdate', NewGame.players,NewGame.turnindex)
-                nsp.emit('newturn', NewGame.players[NewGame.turnindex])
+                if(NewGame.Bank(socket)){
+                    nsp.emit('playerupdate', NewGame.players,NewGame.turnindex)
+                    nsp.emit('newturn', NewGame.players[NewGame.turnindex])
+                }
+                else{
+                    console.log(NewGame.players[NewGame.turnindex].name+' won the game!')
+                    nsp.emit('gamewon',NewGame.players[NewGame.turnindex])
+                }
+
+                
             });
-            nsp.emit('msg', {
-                msg: socket.id + " joined",
-                sender: ""
-            })
+
             socket.on('msg', (msg) => {
                 console.log(socket.id + ' sent: ' + msg)
 

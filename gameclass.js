@@ -96,6 +96,7 @@ function game() {
         roll_count: 0,
         score: 0
     }
+    this.scoreToWin=5000
 
     this.dice = new Array(6).fill({
         value: 0,
@@ -111,7 +112,7 @@ function game() {
             avalible: true
         }, 0, 6)
         this.turn.roll_count = 0;
-        this.turn.score = 0
+        this.turn.score = 0;
     }
 
     this.roll = function (index) {
@@ -182,8 +183,12 @@ function game() {
             if (!(this.players[this.turnindex].score == 0) || this.turn.score >= 500) {
                 this.players[this.turnindex].score += this.turn.score
             }
+            if(this.players.filter((player)=>{return player.score>=this.scoreToWin}).length=1){
+                return false
+            }
             this.turn.score = 0;
             this.nextturn()
+            return true 
 
         }
         //this.nextturn()

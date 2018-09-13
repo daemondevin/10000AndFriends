@@ -54,13 +54,6 @@ export function showrulesmodal(show){
 export function copiedmodal(show){
     if (show){
         document.getElementsByClassName('modalBox')[0].innerHTML='invite copied to clipboard, send it to other player to invite them to your game'
-       /* let ta = document.createElement('textarea')
-        ta.value = document.location
-        document.body.appendChild(ta)
-        ta.select()
-        document.body.removeChild(ta);
-        document.execCommand('copy')
-*/
         document.getElementById("Modal").style.display = "block";
         document.getElementById("Master").style.filter = "blur(5px)";
     }
@@ -68,4 +61,14 @@ export function copiedmodal(show){
         document.getElementsByClassName('modalBox')[0].innerHTML=''
         document.getElementById("Modal").style.display = "none";
         document.getElementById("Master").style.filter = "none";}
+}
+export function simpleModal(text,dur){
+    document.getElementsByClassName('modalBox')[0].innerHTML=text;
+    document.getElementById("Modal").style.display = "block";
+    document.getElementById("Master").style.filter = "blur(5px)";
+    /*setTimeout(()=>{
+        document.getElementsByClassName('modalBox')[0].innerHTML=''
+        document.getElementById("Modal").style.display = "none";
+        document.getElementById("Master").style.filter = "none";
+    },dur)*/
 }

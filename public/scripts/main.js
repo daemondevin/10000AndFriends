@@ -1,4 +1,4 @@
-import {nameModal,playerdisconnect,showrulesmodal} from './modal.js'
+import {nameModal,playerdisconnect,simpleModal} from './modal.js'
 import "./invite.js";
 import { listenEnter } from './enterkey.js';
 //establish a socket connection to the server
@@ -140,6 +140,12 @@ socket.on('roll_Return', function (dice) {
     //avalibleDice = dice.filter(x=>{console.log(x);return x.avalible}).map((y,i)=>{return i})
     rollanim(dice)
     displayButton('Bank', ismyturn)
+})
+socket.on('gamewon', (player)=>{
+    console.log('game was won by '+player.name)
+    simpleModal('The Game Was Won by '+player.name,5);
+    window.setTimeout(()=>{window.location.href = '../'},1000*5)
+
 })
 socket.on('playerDisconect', function (player){
     playerdisconnect(player);
