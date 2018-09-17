@@ -162,7 +162,7 @@ function game() {
     }
 
     this.isHost = function isHost(socket) {
-        for (let i = 0; i < this.players.length; i++) {
+        for (i = 0; i < this.players.length; i++) {
             if (socket.id == this.players[i].id) {
                 return true
             }
