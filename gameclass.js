@@ -96,7 +96,7 @@ function game() {
         roll_count: 0,
         score: 0
     }
-    this.scoreToWin=5000
+    this.scoreToWin=10000
 
     this.dice = new Array(6).fill({
         value: 0,
