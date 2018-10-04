@@ -73,9 +73,9 @@ app.get('/api/newgame/', (req, res) => {
                     nsp.emit('playerupdate', NewGame.players,NewGame.turnindex)
                     nsp.emit('newturn', NewGame.players[NewGame.turnindex])
                 }
-                else{
-                    console.log(NewGame.players[NewGame.turnindex].name+' won the game!')
-                    nsp.emit('gamewon',NewGame.players[NewGame.turnindex])
+                if(NewGame.players.filter((player)=>{return player.score>=NewGame.scoreToWin}).length==1){
+                    console.log(NewGame.players.filter((player)=>{return player.score>=NewGame.scoreToWin}))
+                    nsp.emit('gamewon',NewGame.players.filter((player)=>{return player.score>=NewGame.scoreToWin})[0])
                 }
 
                 
