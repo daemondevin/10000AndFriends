@@ -5,7 +5,7 @@
 }
 .intro_text{
     width:80%;
-    color:white;
+    color:black;
     background-color: var(--maincolor);
     padding:2.5%;
 }
