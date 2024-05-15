@@ -1,5 +1,5 @@
 {
-  "name": "farkle",
+  "name": "10000",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -12,14 +12,15 @@
     "websocket",
     "dice"
   ],
-  "author": "Alex C.",
-  "license": "ISC",
+  "author": "Devin Gaul",
+  "license": "",
   "dependencies": {
     "express": "^4.16.3",
     "socket.io": "^2.0.4",
     "socket.js": "^0.1.4"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "@types/socket.io": "^3.0.2",
+    "nodemon": "^3.1.0"
   }
 }
