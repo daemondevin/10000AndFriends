@@ -13,17 +13,14 @@ let newPlayer;
 $(".join.button").on("click", async function () {
   let result = await modal.prompt(
     `Joining a new room..<br/><br/>Please enter your name:`,
-    "New Game"
+    "New Game",
   );
   newPlayer = result;
   join(newPlayer);
   $("#start").hide();
   $("#play").show();
-  let chatlog = document.getElementById("chatlog");
-  let li = document.createElement("li");
-  li.appendChild(document.createTextNode(newPlayer + " has joined the room."));
-  chatlog.appendChild(li);
-  gamestart();
+  $("#toggleChat").removeClass("disabled");
+  addmsg(newPlayer + " has joined the room.");
 });
 $(".new.button").on("click", function () {
   fetch("/api/newgame/")
@@ -69,7 +66,7 @@ $("#copyInvite").on("click", () => {
     showProgress: "top",
     title: "Copied Invite Link!",
     message: "You can now send the link to a friend!",
-    class: "black",
+    class: "small black",
     className: {
       toast: "ui icon message",
     },
@@ -87,19 +84,16 @@ function rand() {
   return Math.floor(Math.random() * 6 + 1);
 }
 
-function playerdisconnect(player) {
-  $.modal("alert", {
-    title: "Connection Lost",
-    message:
-      "Sorry " +
-      player.name +
-      " but you have lost the connection with the server. You will now be taken to the lobby as this game is over.",
-    handler: function (name) {
-      window.setTimeout(() => {
-        window.location.href = "../";
-      }, 1000 * 5);
-    },
-  });
+async function playerdisconnect(player) {
+  let result = await modal.alert(
+    `Sorry ${player.name} but you have lost the connection with the server. You will now be taken to the lobby as this game is over.`,
+    "Connection Lost",
+  );
+  if (result) {
+    window.setTimeout(() => {
+      window.location.href = "../";
+    }, 1000 * 5);
+  }
 }
 
 function rollanim(dice) {
@@ -145,26 +139,32 @@ function roll(dice) {
 function Bank() {
   socket.emit("bank");
 }
-
+function addmsg(string) {
+  socket.emit("msg", string);
+  let chatlog = document.getElementById("chatlog");
+  let div = document.createElement("div");
+  div.appendChild(document.createTextNode(string));
+  chatlog.appendChild(div);
+}
 function sendmsg() {
   socket.emit("msg", document.getElementById("chatmessage").value);
   let chatlog = document.getElementById("chatlog");
-  let li = document.createElement("li");
-  li.appendChild(
+  let div = document.createElement("div");
+  div.appendChild(
     document.createTextNode(
-      "You: " + document.getElementById("chatmessage").value
-    )
+      "You: " + document.getElementById("chatmessage").value,
+    ),
   );
-  chatlog.appendChild(li);
+  chatlog.appendChild(div);
   document.getElementById("chatmessage").value = "";
 }
 socket.on("msg", function (msg) {
   console.log(msg);
   let chatlog = document.getElementById("chatlog");
-  let li = document.createElement("li");
-  li.appendChild(document.createTextNode(msg.sender + ": " + msg.msg));
+  let div = document.createElement("div");
+  div.appendChild(document.createTextNode(msg.sender + ": " + msg.msg));
   //to do: rewrite this so on a new message coming in we make a new <li>
-  chatlog.appendChild(li);
+  chatlog.appendChild(div);
 });
 socket.on("connection", console.log("New game connected."));
 
@@ -172,7 +172,6 @@ function join(playername) {
   socket.emit("playerjoin", {
     name: playername,
   });
-  //nameModal(false)
 }
 socket.on("playerupdate", (players, turnindex) => {
   //in production app we should NOT share socket ID's
@@ -184,14 +183,15 @@ socket.on("playerupdate", (players, turnindex) => {
   let playerlist = document.getElementById("PlayerList");
   for (let i = 0; i < players.length; i++) {
     console.log(players[i]);
-    let li = document.createElement("li");
+    let div = document.createElement("div");
     let name = document.createElement("div");
     let score = document.createElement("div");
 
-    li.appendChild(name);
-    li.appendChild(score);
+    div.appendChild(name);
+    div.appendChild(score);
     if (i == turnindex) {
-      name.innerHTML = ">" + players[i].name;
+      name.innerHTML =
+        `<a class="ui primary empty circular label"></a> ` + players[i].name;
     } else {
       name.innerHTML = players[i].name;
     }
@@ -199,7 +199,7 @@ socket.on("playerupdate", (players, turnindex) => {
     name.setAttribute("id", "PlayerListName");
     score.setAttribute("id", "PlayerListScore");
 
-    playerlist.appendChild(li);
+    playerlist.appendChild(div);
   }
 });
 
@@ -219,14 +219,14 @@ socket.on("newturn", (player) => {
 socket.on("roll_Return", function (dice) {
   console.log(dice);
   diceLocal = dice;
-  avalibleDice = dice
+  /*avalibleDice = dice
     .filter((x) => {
       console.log(x);
       return x.avalible;
     })
     .map((y, i) => {
       return i;
-    });
+    });*/
   rollanim(dice);
 
   if (ismyturn) {
@@ -235,17 +235,18 @@ socket.on("roll_Return", function (dice) {
     $("#Bank").hide();
   }
 });
-socket.on("gamewon", (player) => {
+
+socket.on("gamewon", async (player) => {
   console.log("game was won by " + player.name);
-  $.modal("alert", {
-    transition: "Fade Up",
-    class: "small inverted",
-    message: "The winner is " + player.name + "!",
-  });
+  let result = await modal.alert(
+    `The winner is ${player.name}!`,
+    "Congradulations!",
+  );
   window.setTimeout(() => {
     window.location.href = "../";
   }, 1000 * 5);
 });
+
 socket.on("playerDisconect", function (player) {
   playerdisconnect(player);
 });
@@ -253,6 +254,16 @@ socket.on("playerDisconect", function (player) {
 var diceLocal = [];
 var diceindex = [0, 1, 2, 3, 4, 5];
 var ismyturn = false;
+
+$("#GameStart").on("click", function () {
+  gamestart();
+});
+$("#rollBtn").on("click", function () {
+  socket.emit("roll", diceindex);
+});
+$("#Bank").on("click", function () {
+  Bank();
+});
 
 function diceEventListeners() {
   for (let i = 0; i < document.querySelectorAll(".dice.image").length; i++) {
@@ -272,3 +283,22 @@ function diceEventListeners() {
       });
   }
 }
+
+/*function diceEventListeners() {
+  $(".dice.image").each(function (i) {
+    $(this).on("click", function () {
+      console.log(ismyturn, diceLocal[i].avalible);
+      if (ismyturn && diceLocal[i].avalible) {
+        if ($.inArray(i, diceindex) !== -1) {
+          diceindex = $.grep(diceindex, function (j) {
+            return j != i;
+          });
+          $("#d" + i).css("background-color", "grey");
+        } else {
+          diceindex.push(i);
+          $("#d" + i).css("background-color", "white");
+        }
+      }
+    });
+  });
+}*/

@@ -15,7 +15,8 @@ body {
 }
 
 .lead {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
+  text-align: justify;
 }
 
 modal-prompt {

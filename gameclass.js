@@ -222,7 +222,7 @@ function game() {
       );
       if (
         !(this.players[this.turnindex].score == 0) ||
-        this.turn.score >= 500
+        this.turn.score >= 1000
       ) {
         this.players[this.turnindex].score += this.turn.score;
       }
