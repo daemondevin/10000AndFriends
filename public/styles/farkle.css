@@ -8,15 +8,20 @@
 
 body {
   margin: 0;
-  font-family: "PT Serif", serif;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  /* overflow: hidden;*/
 }
 
 .lead {
   font-size: 1.05rem;
+}
+
+modal-prompt {
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 p {
@@ -57,6 +62,14 @@ canvas {
 
 #score-table {
   z-index: 10;
+}
+
+a.ui.label {
+  padding: 1px;
+}
+
+a.ui.label img:hover {
+  background-color: #757575;
 }
 
 .dice-button {
@@ -152,9 +165,7 @@ canvas {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition:
-    left 0.2s ease-in-out,
-    top 0.2s ease-in-out;
+  transition: left 0.2s ease-in-out, top 0.2s ease-in-out;
 }
 .dice-loader--2 .dice-loader__dot {
   left: 33%;
@@ -248,9 +259,7 @@ canvas {
 }
 
 .loading-overlay {
-  transition:
-    visibility 0s ease-in-out 0.5s,
-    opacity 0.5s ease-in-out;
+  transition: visibility 0s ease-in-out 0.5s, opacity 0.5s ease-in-out;
   bottom: 0;
   left: 0;
   position: absolute;

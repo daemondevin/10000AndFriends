@@ -7,10 +7,27 @@
         <title>10,000 with Friends!</title>
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/fomantic-ui@2.9.3/dist/semantic.min.css" />
         <link rel="stylesheet" type="text/css" href="/styles/farkle.css" />
+        <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+        <script type="importmap">
+		  {
+			"imports": {
+                "three": "https://unpkg.com/three@0.138.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.138.0/examples/jsm/",
+                "cannon-es": "https://cdn.skypack.dev/cannon-es"
+			}
+		  }
+		</script>
+        <script src="https://unpkg.com/jquery@3.7.1/dist/jquery.js"></script>
+        <script src="https://unpkg.com/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+        <script type="module" src="/scripts/main.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>
+        <script src="https://cdn.jsdelivr.net/gh/daemondevin/cdn@main/ModalDialog.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+        <script>eruda.init();</script>
     </head>
 
-    <body class="loading-overlay-showing" data-loading-overlay=""
-        data-plugin-options="{'hideDelay': 500, 'effect': 'cubes'}">
+    <body class="loading-overlay-showing" data-loading-overlay="" data-plugin-options="{'hideDelay': 500, 'effect': 'cubes'}">
         <div class="loading-overlay">
             <div class="bounce-loader">
                 <div class="cssload-thecube">
@@ -19,6 +36,242 @@
                     <div class="cssload-cube cssload-c4"></div>
                     <div class="cssload-cube cssload-c3"></div>
                 </div>
+            </div>
+        </div>
+        <div class="ui inverted wide rules flyout">
+            <i class="close icon"></i>
+            <div class="ui header">Rules</div>
+            <div class="scrolling content">
+                <div class="ui inverted dividing header">A Brief Rundown</div>
+                <p class="lead"><img class="ui tiny rounded right floated bordered image" title="Farkle rules"
+                        src="https://cdn11.bigcommerce.com/s-70184/product_images/uploaded_images/farkle-rules-dice-game.gif"
+                        alt="10,000 rules" />10,000 is a push-your-luck game in which the objective is to be
+                    the first player to accumulate 10,000 points. The play is passed
+                    back and forth as players attempt to gather point-scoring melds while evaluating if the
+                    risk of rolling a farkle and losing all unbanked points is worth the lure of getting
+                    just a few more points. As with many games Farkle is played in numerous regions with
+                    dozens of variations. The version we have here is among the simpler ones, and
+                    only includes the standard melds common to most variations we could find.
+                </p>
+                <div class="ui inverted dividing header">Gameplay</div>
+                <div class="ui inverted sub header">Rolling, scoring, banking</div>
+                <p>
+                    The game is played with six dice. A player starts their turn by throwing all six dice.
+                    Once the dice have been rolled the player may put aside any dice that form scoring melds
+                    (see melds below). A player must put aside at least one scoring die each
+                    throw, but beyond that is free in what dice they put aside or throw again.
+                </p>
+                <p>
+                    Players may now roll any remaining dice not already put aside in hopes of being able to
+                    make more melds, risking the chance of farkling (see below) and scoring nothing.
+                    Players who decide not to take that risk can instead bank. When a player banks any
+                    points earned during the round are added to the grand total and are safe for the
+                    rest of the game. The player's turn ends and they pass all dice to their opponent who
+                    takes their turn.
+                </p>
+                <h4 class="ui inverted sub header">All dice in a meld must come from one throw</h4>
+                <p>
+                    Melds do not carry over between throws. If you score two ones in one throw and set them
+                    aside throwing a one in the next throw does not mean you have three ones, it means
+                    you have a set of two ones worth 200, and a separate set of one worth 100 for a total of
+                    300. Any formed melds must contain dice obtained from a single throw.
+                </p>
+
+                <h4 class="ui inverted sub header">Farkling</h4>
+                <p>
+                    If there are no melds on the table after a player throws their dice they have "farkled".
+                    When a player farkles their turn is over, play passes to their opponent,
+                    and any unbanked points earned during the round are lost. With every throw the odds of
+                    farkling grow higher, and the player risks more and more points in the process.
+                    The key of the game comes in finding when you should risk the farkle and throw again,
+                    and when you should call it quits and bank your points.
+                </p>
+                <h4 class="ui inverted sub header">Hot Dice</h4>
+                <p>
+                    In the case a player can form melds from all the dice they threw they have thrown "Hot
+                    dice". Such a player can now, if they choose, pick up all six dice they have
+                    and throw them again, effectively restarting their turn. Any points they already earned
+                    before throwing the hot dice are kept as part of the accumulating round total
+                    and are risked along with any new melds made with the hot dice. A player can thus
+                    continue indefinitely as long as they never farkle.
+                </p>
+                <h3 class="ui inverted sub header">Game End</h3>
+                <p>
+                    The game ends once either player ends their turn with more than 10.000 points banked.
+                    The game doesn't automatically end your turn when you hypothetically reach the
+                    threshold,
+                    because we've found it to be more fun to manually bank for the win and in the cases were
+                    we want to see how far we can push our already sizable lead. However once you
+                    find that banking will lead to you winning we recommend doing so, unless you just want
+                    to show off to Bill.
+                </p>
+
+                <div class="ui inverted dividing header">Melds</div>
+
+                <p>
+                    The following are the melds that the game recognizes.
+                </p>
+
+                <ul>
+                    <li><b>Ones: </b>Any die depicting a one. Worth 100 points each.</li>
+                    <li><b>Fives: </b>Any die depicting a five. Worth 50 points each.</li>
+                    <li><b>Three Ones: </b>A set of three dice depicting a one. worth 1000 points</li>
+                    <li><b>Three Twos: </b>A set of three dice depicting a two. worth 200 points</li>
+                    <li><b>Three Threes: </b>A set of three dice depicting a three. worth 300 points</li>
+                    <li><b>Three Fours: </b>A set of three dice depicting a four. worth 400 points</li>
+                    <li><b>Three Fives: </b>A set of three dice depicting a five. worth 500 points</li>
+                    <li><b>Three Sixes: </b>A set of three dice depicting a six. worth 600 points</li>
+                    <li><b>Four of a kind: </b>Any set of four dice depicting the same value. Worth 1000
+                        points </li>
+                    <li><b>Five of a kind: </b>Any set of five dice depicting the same value. Worth 2000
+                        points </li>
+                    <li><b>Six of a kind: </b>Any set of six dice depicting the same value. Worth 3000
+                        points </li>
+                    <li><b>Three Pairs: </b>Any three sets of two pairs of dice. Includes having a four of a
+                        kind plus a pair. Worth 1500 points </li>
+                    <li><b>Run: </b>Six dice in a sequence (1,2,3,4,5,6). Worth 2500 points </li>
+
+
+                </ul>
+                <p>Here's a point scoring chart:</p>
+                <table class="ui inverted small black striped celled single line table">
+                    <thead>
+                        <tr>
+                            <th>Roll</th>
+                            <th class="right aligned">Points</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Single "1"</td>
+                            <td class="right aligned">100</td>
+                            <td>
+                                <i class="dice one icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Single "5"</td>
+                            <td class="right aligned">50</td>
+                            <td>
+                                <i class="dice five icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three 1's</td>
+                            <td class="right aligned">300</td>
+                            <td>
+                                <i class="dice one icon"></i>
+                                <i class="dice one icon"></i>
+                                <i class="dice one icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three 2's</td>
+                            <td class="right aligned">200</td>
+                            <td>
+                                <i class="dice two icon"></i>
+                                <i class="dice two icon"></i>
+                                <i class="dice two icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three 3's</td>
+                            <td class="right aligned">300</td>
+                            <td>
+                                <i class="dice three icon"></i>
+                                <i class="dice three icon"></i>
+                                <i class="dice three icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three 4's</td>
+                            <td class="right aligned">400</td>
+                            <td>
+                                <i class="dice four icon"></i>
+                                <i class="dice four icon"></i>
+                                <i class="dice four icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three 5's</td>
+                            <td class="right aligned">500</td>
+                            <td>
+                                <i class="dice five icon"></i>
+                                <i class="dice five icon"></i>
+                                <i class="dice five icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three 6's</td>
+                            <td class="right aligned">600</td>
+                            <td>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Four of a Kind</td>
+                            <td class="right aligned">1,000</td>
+                            <td>
+                                <i class="dice four icon"></i>
+                                <i class="dice four icon"></i>
+                                <i class="dice four icon"></i>
+                                <i class="dice four icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Five of a Kind</td>
+                            <td class="right aligned">2,000</td>
+                            <td>
+                                <i class="dice five icon"></i>
+                                <i class="dice five icon"></i>
+                                <i class="dice five icon"></i>
+                                <i class="dice five icon"></i>
+                                <i class="dice five icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Six of a Kind</td>
+                            <td class="right aligned">10,000</td>
+                            <td>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                                <i class="dice six icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Straight (1-2-3-4-5-6)</td>
+                            <td class="right aligned">1,200</td>
+                            <td>
+                                <i class="dice one icon"></i>
+                                <i class="dice two icon"></i>
+                                <i class="dice three icon"></i>
+                                <i class="dice four icon"></i>
+                                <i class="dice five icon"></i>
+                                <i class="dice six icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Three Pairs</td>
+                            <td class="right aligned">750</td>
+                            <td>
+                                <i class="dice one icon"></i>
+                                <i class="dice one icon"></i>
+                                <i class="dice two icon"></i>
+                                <i class="dice two icon"></i>
+                                <i class="dice three icon"></i>
+                                <i class="dice three icon"></i>
+                            </td>
+                        </tr>
+                        </thead>
+                </table>
+                <p>One exception to this rule is that three 1's rolled is 1,000 points rather than 100
+                    points.</p>
             </div>
         </div>
         <main class="ui text container">
@@ -75,7 +328,7 @@
                                 more points and risk losing them all in a Farkle? Let's find out and play..
                             </p>
                         </div>
-                        <button id="newGameBtn" class="ui primary play button" data-tooltip="Start the game!"
+                        <button class="ui primary new button" data-tooltip="Start the game!"
                             data-variation="tiny basic">New Game</button>
                         <button id="rulesBtn" class="ui right floated primary rules button"
                             data-tooltip="Learn to play or review the scoring chart."
@@ -87,20 +340,6 @@
 
         </main>
 
-        <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
-        <script type="importmap">
-		  {
-			"imports": {
-                "three": "https://unpkg.com/three@0.138.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.138.0/examples/jsm/",
-                "cannon-es": "https://cdn.skypack.dev/cannon-es"
-			}
-		  }
-		</script>
-        <script src="https://unpkg.com/jquery@3.7.1/dist/jquery.js"></script>
-        <script src="https://unpkg.com/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-        <script type="module" src="/scripts/farkle.js"></script>
         <script>
             window.game = {};
             // Game Common Functions

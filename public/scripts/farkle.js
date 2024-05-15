@@ -3,14 +3,10 @@ import * as THREE from "three";
 import * as modal from "/scripts/ModalDialog.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls";
 import { OBJLoader } from "three/addons/loaders/OBJLoader";
-import { MTLLoader } from "tmhree/addons/loaders/MTLLoader";
-import { eruda } from "https://cdnjs.cloudflare.com/ajax/libs/eruda/3.0.1/eruda.min.js";
+import { MTLLoader } from "three/addons/loaders/MTLLoader";
+import { eruda } from "";
 
-eruda.init();
 
-const alert = modal.alert,
-  prompt = modal.prompt,
-  confirm = modal.confirm;
 /*
 const canvas = document.querySelector("#game-area");
 
@@ -81,42 +77,6 @@ initScene();
 
 window.addEventListener("resize", updateSceneSize);
 */
-$(window).on("unload", function () {
-  return "Thanks for playing!";
-});
-$("#newGameBtn").on("click", function () {
-  fetch("/api/newgame/")
-    .then((resp) => {
-      return resp.json();
-    })
-    .then((data) => {
-      console.log(data);
-      window.location.href = window.location + data.Name;
-    });
-});
-$("#NewGameName").on("keypress", function () {
-  fetch("/api/newgame/")
-    .then((resp) => {
-      return resp.json();
-    })
-    .then((data) => {
-      console.log(data);
-      window.location.href = window.location + data.Name;
-    });
-});
-$("#rulesBtn").on("click", function () {
-  $("#rules").toggle();
-});
-$("#openChat").on("click", function () {
-  if ($(this).is(":contains('OPEN')")) {
-    $(this).html('CLOSE CHAT&emsp;<i class="comments icon"></i></a>');
-  } else if ($(this).is(":contains('CLOSE')")) {
-    $(this).html('OPEN CHAT&emsp;<i class="comments icon"></i></a>');
-  } else {
-    // Shouldn't reach this..
-  }
-  $("#chat").toggle();
-});
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -158,11 +118,7 @@ $playBtn.on("click", function () {
   }
 });
 */
-$("#rules").on("click", function () {
-  $("#welcome").toggle();
-  $("#rules").toggle();
-  $("#game").toggle();
-});
+
 /*
 $backBtn.on("click", function () {
   $("#welcome").show();

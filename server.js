@@ -4,13 +4,12 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const gameclass = require("./gameclass");
 const port = process.env.PORT || 3030;
-const eruda = require("https://cdnjs.cloudflare.com/ajax/libs/eruda/3.0.1/eruda.min.js");
-eruda.init();
 var rooms = [];
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/lobby.html");
 });
+
 app.get("/api/newgame/", (req, res) => {
   var NewGame = new gameclass();
   res.send({ Name: NewGame.Name });

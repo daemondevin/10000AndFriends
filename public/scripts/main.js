@@ -3,14 +3,66 @@ var socket = io(window.location.pathname);
 
 //Show the nameModal to allow users entering the room to give themselves a name.
 //nameModal(true);
-let result = prompt(
-  "What's Your Name",
-  "Please enter your name to join the game..",
-);
-diceEventListeners();
 
-document.getElementById("copyInvite").addEventListener("click", () => {
-  console.log("copy modal opened");
+diceEventListeners();
+$("#play").hide();
+$(window).on("unload", function () {
+  return "Thanks for playing!";
+});
+let newPlayer;
+$(".join.button").on("click", async function () {
+  let result = await modal.prompt(
+    `Joining a new room..<br/><br/>Please enter your name:`,
+    "New Game"
+  );
+  newPlayer = result;
+  join(newPlayer);
+  $("#start").hide();
+  $("#play").show();
+  let chatlog = document.getElementById("chatlog");
+  let li = document.createElement("li");
+  li.appendChild(document.createTextNode(newPlayer + " has joined the room."));
+  chatlog.appendChild(li);
+  gamestart();
+});
+$(".new.button").on("click", function () {
+  fetch("/api/newgame/")
+    .then((resp) => {
+      return resp.json();
+    })
+    .then((data) => {
+      console.log(data);
+      window.location.href = window.location + data.Name;
+    });
+});
+$("#NewGameName").on("keypress", function () {
+  fetch("/api/newgame/")
+    .then((resp) => {
+      return resp.json();
+    })
+    .then((data) => {
+      console.log(data);
+      window.location.href = window.location + data.Name;
+    });
+});
+$("#rulesBtn").on("click", function () {
+  $(".ui.rules.flyout").flyout("show");
+});
+$("#toggleChat").on("click", function () {
+  $(".chat.flyout").flyout("toggle");
+});
+$("#showPlayers").on("click", function () {
+  if ($(this).is(":contains('SHOW')")) {
+    $(this).html('HIDE PLAYERS&emsp;<i class="users icon"></i></a>');
+  } else if ($(this).is(":contains('HIDE')")) {
+    $(this).html('SHOW PLAYERS&emsp;<i class="users icon"></i></a>');
+  } else {
+    // Shouldn't reach this..
+  }
+  $("#PlayerList").toggle();
+});
+
+$("#copyInvite").on("click", () => {
   $.toast({
     showIcon: "copy",
     displayTime: "auto",
@@ -28,19 +80,8 @@ document.getElementById("copyInvite").addEventListener("click", () => {
   ta.select();
   document.execCommand("copy");
   document.body.removeChild(ta);
-
-  /* setTimeout(function(){
-      copiedmodal(false)
-  },4000) */
+  console.log("invite link copied");
 });
-
-function displayButton(id, show) {
-  if (show) {
-    document.getElementById(id).style.display = "inline-block";
-  } else {
-    document.getElementById(id).style.display = "none";
-  }
-}
 
 function rand() {
   return Math.floor(Math.random() * 6 + 1);
@@ -82,9 +123,6 @@ function rollanim(dice) {
     }
     if (changes > 30) {
       for (let i = 0; i <= 5; i++) {
-        //let diceElem = document.createElement('svg')
-        //diceElem.setAttribute('src','/img/dice'+dice[i].value+".svg")
-
         document
           .getElementById("d" + i)
           .setAttribute("src", "/img/dice" + dice[i].value + ".svg");
@@ -96,7 +134,8 @@ function rollanim(dice) {
 
 function gamestart() {
   socket.emit("GameStart");
-  displayButton("GameStart", false);
+  //displayButton("GameStart", false);
+  $("#GameStart").hide();
 }
 
 function roll(dice) {
@@ -113,8 +152,8 @@ function sendmsg() {
   let li = document.createElement("li");
   li.appendChild(
     document.createTextNode(
-      "You: " + document.getElementById("chatmessage").value,
-    ),
+      "You: " + document.getElementById("chatmessage").value
+    )
   );
   chatlog.appendChild(li);
   document.getElementById("chatmessage").value = "";
@@ -127,7 +166,7 @@ socket.on("msg", function (msg) {
   //to do: rewrite this so on a new message coming in we make a new <li>
   chatlog.appendChild(li);
 });
-socket.on("connection", console.log("Newconnections"));
+socket.on("connection", console.log("New game connected."));
 
 function join(playername) {
   socket.emit("playerjoin", {
@@ -141,7 +180,6 @@ socket.on("playerupdate", (players, turnindex) => {
   console.log(players);
   if (players.filter((player) => player.host)[0].id != socket.id) {
     console.log("player is not host!");
-    displayButton("GameStart", false);
   }
   let playerlist = document.getElementById("PlayerList");
   for (let i = 0; i < players.length; i++) {
@@ -170,16 +208,32 @@ socket.on("newturn", (player) => {
   if (ismyturn) {
     diceindex = [0, 1, 2, 3, 4, 5];
   } else {
-    displayButton("Bank", false);
+    $("#Bank").hide();
   }
-  displayButton("RollBtn", ismyturn);
+  if (ismyturn) {
+    $("#RollBtn").show();
+  } else {
+    $("#RollBtn").hide();
+  }
 });
 socket.on("roll_Return", function (dice) {
   console.log(dice);
   diceLocal = dice;
-  //avalibleDice = dice.filter(x=>{console.log(x);return x.avalible}).map((y,i)=>{return i})
+  avalibleDice = dice
+    .filter((x) => {
+      console.log(x);
+      return x.avalible;
+    })
+    .map((y, i) => {
+      return i;
+    });
   rollanim(dice);
-  displayButton("Bank", ismyturn);
+
+  if (ismyturn) {
+    $("#Bank").show();
+  } else {
+    $("#Bank").hide();
+  }
 });
 socket.on("gamewon", (player) => {
   console.log("game was won by " + player.name);
@@ -200,33 +254,10 @@ var diceLocal = [];
 var diceindex = [0, 1, 2, 3, 4, 5];
 var ismyturn = false;
 
-document.getElementById("joinBtn").addEventListener("click", function () {
-  join(document.getElementById("playername").value);
-});
-document.getElementById("GameStart").addEventListener("click", function () {
-  gamestart();
-});
-
-document.getElementById("rollBtn").addEventListener("click", function () {
-  socket.emit("roll", diceindex);
-});
-document.getElementById("Bank").addEventListener("click", function () {
-  Bank();
-});
-//For sending Chat mesages
-document.getElementById("sendChatMsg").addEventListener("click", function () {
-  sendmsg();
-});
-document.getElementById("playername", function () {
-  join(document.getElementById("playername").value);
-});
-document.getElementById("chatmessage").addEventListener("click", function () {
-  sendmsg();
-});
 function diceEventListeners() {
-  for (let i = 0; i < document.getElementsByClassName("dice").length; i++) {
+  for (let i = 0; i < document.querySelectorAll(".dice.image").length; i++) {
     document
-      .getElementsByClassName("dice")
+      .querySelectorAll(".dice.image")
       [i].addEventListener("click", function () {
         console.log(ismyturn, diceLocal[i].avalible);
         if (ismyturn && diceLocal[i].avalible) {
